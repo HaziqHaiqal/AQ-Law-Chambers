@@ -206,7 +206,7 @@ export function Header() {
             ref={mobileTrigger}
             id="mobile-menu-toggle"
             type="button"
-            className="mobile-menu-trigger -mr-2.5 size-11 place-items-center"
+            className={`mobile-menu-trigger -mr-2.5 size-11 place-items-center transition-colors duration-300 ${open ? "text-white" : "text-navy"}`}
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
             aria-controls="mobile-menu"

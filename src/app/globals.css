@@ -340,9 +340,6 @@ summary::-webkit-details-marker {
 .menu-toggle-icon.is-open > span:last-child {
   transform: rotate(-45deg);
 }
-.site-header:has(.menu-toggle-icon.is-open) .mobile-menu-trigger {
-  color: #fff;
-}
 
 /* Compact row sizing so the whole menu fits one screen; tightened further on short phones. */
 .mobile-menu .menu-row {
