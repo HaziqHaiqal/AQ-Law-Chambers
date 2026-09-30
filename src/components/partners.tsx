@@ -21,20 +21,16 @@ export function Partners() {
               </>
             }
           />
-          <Reveal className="max-w-md text-[14px] leading-[1.9] text-slate lg:pb-1">
-            Good counsel is personal. Meet the partners and legal team who bring
-            clear thinking, focused expertise and individual attention to your
-            matter.
+          <Reveal className="max-w-md text-base leading-[1.8] text-slate lg:pb-2">
+            Good counsel is personal. Meet the partners and legal team who bring clear thinking, focused expertise
+            and individual attention to your matter.
           </Reveal>
         </div>
 
         <div className={styles.partnerGrid}>
           {partners.map((partner, index) => (
             <Reveal key={partner.name} delay={index * 100}>
-              <article
-                className={styles.partnerCard}
-                aria-labelledby={`partner-name-${index}`}
-              >
+              <article className={styles.partnerCard} aria-labelledby={`partner-name-${index}`}>
                 <div className={styles.profileCover}>
                   <div className={styles.portrait}>
                     <Image
@@ -59,15 +55,10 @@ export function Partners() {
                   </div>
                   <div className={styles.profileIntro}>
                     <p className={styles.role}>Partner</p>
-                    <h3
-                      id={`partner-name-${index}`}
-                      className={styles.partnerName}
-                    >
+                    <h3 id={`partner-name-${index}`} className={styles.partnerName}>
                       {partner.name}
                     </h3>
-                    <p className={styles.credential}>
-                      Advocate &amp; Solicitor
-                    </p>
+                    <p className={styles.credential}>Advocate &amp; Solicitor</p>
                     <div className={styles.focus}>
                       <p className={styles.focusTitle}>{partner.focus}</p>
                       <p className={styles.summary}>{partner.summary}</p>
@@ -83,11 +74,10 @@ export function Partners() {
                   </div>
                 </div>
 
+                {/* Full profile opens inline, inside the card. */}
                 <details className={styles.profileDetails}>
                   <summary className={styles.profileToggle}>
-                    <span className={styles.closedLabel}>
-                      View profile &amp; experience
-                    </span>
+                    <span className={styles.closedLabel}>View profile &amp; experience</span>
                     <span className={styles.openLabel}>Close profile</span>
                     <Plus className={styles.toggleIcon} />
                   </summary>
@@ -99,9 +89,7 @@ export function Partners() {
                         <li key={item}>{item}</li>
                       ))}
                     </ul>
-                    <p className={styles.qualification}>
-                      {partner.qualifications[0]}
-                    </p>
+                    <p className={styles.qualification}>{partner.qualifications[0]}</p>
                   </div>
                 </details>
               </article>
@@ -109,34 +97,29 @@ export function Partners() {
           ))}
         </div>
 
-        <div className={styles.teamHeader}>
-          <h3 className="font-serif text-[27px] tracking-[-0.03em]">
-            Partners &amp; associates
-          </h3>
-          <span className={styles.teamRule} aria-hidden="true" />
-          <p className="text-[11px] text-slate">
-            One team. A shared commitment.
-          </p>
-        </div>
-        <ul className={styles.teamGrid}>
-          {teamMembers.map((member) => (
-            <li key={member.name}>
-              <a
-                href={`mailto:${firm.email}?subject=${encodeURIComponent(`Attention: ${member.name}`)}`}
-                aria-label={`Email ${member.name}, ${member.role}`}
-                className={styles.teamMember}
-              >
-                <div>
-                  <p className={styles.teamRole}>{member.role}</p>
-                  <h4 className={styles.teamName}>{member.name}</h4>
-                </div>
-                <span className={styles.teamArrow} aria-hidden="true">
-                  <ArrowUpRight className="size-4" />
-                </span>
-              </a>
-            </li>
-          ))}
-        </ul>
+        <Reveal className={styles.team}>
+          <div className={styles.teamHeader}>
+            <h3>Partners &amp; associates</h3>
+            <p>One team. A shared commitment.</p>
+          </div>
+          <ul className={styles.directory}>
+            {teamMembers.map((member) => (
+              <li key={member.name}>
+                <a
+                  href={`mailto:${firm.email}?subject=${encodeURIComponent(`Attention: ${member.name}`)}`}
+                  aria-label={`Email ${member.name}, ${member.role}`}
+                  className={styles.member}
+                >
+                  <span>
+                    <span className={styles.memberName}>{member.name}</span>
+                    <span className={styles.memberRole}>{member.role}</span>
+                  </span>
+                  <ArrowUpRight className={styles.memberArrow} />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </Reveal>
       </Container>
     </section>
   );

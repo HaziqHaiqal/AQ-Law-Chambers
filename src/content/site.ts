@@ -36,18 +36,21 @@ export const nav = {
 export const practiceAreas = [
   {
     id: "injunctions",
+    short: "Injunctions & freezing orders",
     title: "Ex Parte Injunctions & Freezing Orders",
     subtitle: "Mareva & Anton Piller",
     body: "Urgent without-notice applications to stop assets being dissipated and evidence being destroyed — domestic and worldwide freezing orders, search orders and preservation relief.",
   },
   {
     id: "disclosure",
+    short: "Bank & exchange disclosure",
     title: "Third-Party & Exchange Disclosure",
     subtitle: "Bankers Trust Orders / Norwich Pharmacal",
     body: "Compelling banks, cryptocurrency exchanges and intermediaries to disclose KYC and account information needed to trace funds and identify wrongdoers.",
   },
   {
     id: "evidence",
+    short: "Digital evidence",
     title: "Secondary Digital Evidence & Discovery",
     subtitle: "Sections 65 & 66 Evidence Act 1950",
     body: "Securing and proving digital evidence — secondary evidence, notices to produce, and forensic preservation of devices, wallets and cloud accounts.",
@@ -57,16 +60,19 @@ export const practiceAreas = [
 export const sectors = [
   {
     id: "crypto",
+    short: "Crypto & Web3 recovery",
     title: "Cryptocurrency Exchanges & Web3 Asset Recovery",
     body: "Tracing and recovering misappropriated digital assets, from on-chain forensics to freezing exchange accounts and serving offshore platforms.",
   },
   {
     id: "esg",
+    short: "ESG & financial fraud",
     title: "ESG Fraud, Carbon Offset & Financial Misrepresentation",
     body: "Litigation over greenwashing, carbon credit fraud and misleading financial statements, for investors, counterparties and corporates.",
   },
   {
     id: "cloud",
+    short: "Cloud & technology disputes",
     title: "Cloud Infrastructure & Technology Supply Chain Disputes",
     body: "Disputes over hosting, data-centre and SaaS contracts, service failures and technology supply chains — including urgent access and data-preservation relief.",
   },
@@ -112,8 +118,8 @@ export const partners = [
   {
     name: "Nur Afiqah binti Saidin",
     initials: "NA",
-    portrait: "/partners/nur-afiqah.jpg",
-    portraitPosition: "50% 50%",
+    portrait: "/partners/afiqah-saidin.jpg",
+    portraitPosition: "50% 100%",
     portraitScale: 1,
     portraitOrigin: "50% 50%",
     contactName: "Nur Afiqah",
@@ -131,10 +137,10 @@ export const partners = [
   {
     name: "Nur Qisdina Batrisyia binti Arzmisam",
     initials: "NQ",
-    portrait: "/partners/nur-qisdina.jpg",
-    portraitPosition: "50% 50%",
-    portraitScale: 2.05,
-    portraitOrigin: "50% 34%",
+    portrait: "/partners/qisdina-arzmisam.jpg",
+    portraitPosition: "50% 100%",
+    portraitScale: 1,
+    portraitOrigin: "50% 50%",
     contactName: "Nur Qisdina",
     focus: "Digital assets & forensic evidence",
     summary: "Connecting technical evidence with legal strategy to pursue assets across borders.",

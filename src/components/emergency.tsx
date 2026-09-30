@@ -1,12 +1,19 @@
 import { emergencySteps, firm } from "@/content/site";
-import { ArrowUpRight, Phone } from "./icons";
+import { HotlineStatus } from "./hotline-status";
+import { ArrowRight, Phone } from "./icons";
 import { Reveal } from "./reveal";
 import { Container, SectionHeading } from "./ui";
 
 export function Emergency() {
   return (
-    <section id="emergency" className="bg-navy py-20 text-white sm:py-24">
-      <Container className="grid gap-12 lg:grid-cols-2 lg:gap-20">
+    <section id="emergency" className="relative isolate overflow-hidden bg-navy py-20 text-white sm:py-24 lg:py-28">
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute -bottom-[0.18em] -left-[0.04em] -z-10 select-none font-serif text-[clamp(10rem,24vw,21rem)] leading-none tracking-[-0.04em] text-white/[0.035]"
+      >
+        24/7
+      </span>
+      <Container className="grid gap-14 lg:grid-cols-2 lg:gap-20">
         <div>
           <SectionHeading
             tone="light"
@@ -20,43 +27,43 @@ export function Emergency() {
             }
             intro="If assets are being moved or digital evidence is at risk, speak to us immediately. Our emergency hotline is available around the clock."
           />
-          <a
-            href={`tel:${firm.hotlineTel}`}
-            className="group mt-8 inline-flex items-center gap-5"
-          >
-            <span className="grid size-12 place-items-center rounded-full border border-gold/40">
-              <Phone className="size-5 text-gold" />
-            </span>
-            <span>
-              <span className="block text-[9px] uppercase tracking-[0.14em] text-slate-light">
-                24/7 Ex Parte Injunction Hotline
-              </span>
-              <span className="mt-1.5 block text-[26px] font-medium tracking-[0.01em]">
-                {firm.hotline}
-              </span>
-            </span>
-            <ArrowUpRight className="ml-2 size-5 text-gold transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
-          </a>
-          <p className="mt-6 text-[11px] text-slate-light">
-            For an urgent matter, calling is the fastest way to reach us.
-          </p>
+          <Reveal className="mt-10 max-w-md">
+            <a
+              href={`tel:${firm.hotlineTel}`}
+              className="group block border border-white/15 p-6 transition-colors hover:border-gold/60 sm:p-7"
+            >
+              <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2">
+                <p className="text-xs font-medium uppercase tracking-[0.16em] text-gold">
+                  24/7 Ex Parte Injunction Hotline
+                </p>
+                <HotlineStatus />
+              </div>
+              <div className="mt-4 flex items-center justify-between gap-4">
+                <span className="flex items-center gap-4">
+                  <Phone className="size-6 text-gold" />
+                  <span className="font-serif text-[2.1rem] leading-none">{firm.hotline}</span>
+                </span>
+                <ArrowRight className="size-5 text-gold transition-transform group-hover:translate-x-1" />
+              </div>
+            </a>
+            <p className="mt-4 text-sm text-slate-light">
+              For an urgent matter, calling is the fastest way to reach us.
+            </p>
+          </Reveal>
         </div>
-        <ol className="border-t border-white/20 lg:mt-1">
+
+        <ol className="border-t border-white/20 lg:mt-2">
           {emergencySteps.map((step, index) => (
             <Reveal
               as="li"
               key={step.title}
-              delay={index * 60}
-              className="flex gap-5 border-b border-white/15 py-5"
+              delay={index * 70}
+              className="grid grid-cols-[3rem_1fr] border-b border-white/15 py-7"
             >
-              <span className="pt-1 font-serif text-lg italic text-gold">
-                0{index + 1}
-              </span>
+              <span className="pt-0.5 font-serif text-xl italic text-gold">0{index + 1}</span>
               <div>
-                <h3 className="text-[13px] font-medium">{step.title}</h3>
-                <p className="mt-2 text-xs leading-[1.85] text-slate-light">
-                  {step.body}
-                </p>
+                <h3 className="text-lg font-medium">{step.title}</h3>
+                <p className="mt-2 text-[15px] leading-[1.75] text-slate-light">{step.body}</p>
               </div>
             </Reveal>
           ))}

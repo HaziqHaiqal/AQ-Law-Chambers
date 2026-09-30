@@ -30,12 +30,13 @@ export function Reveal({
     if (!el) return;
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
+        // Also reveal anything already scrolled past (e.g. after jumping to an anchor).
+        if (entry.isIntersecting || entry.boundingClientRect.top < 0) {
           setVisible(true);
           observer.disconnect();
         }
       },
-      { rootMargin: "0px 0px -10% 0px" },
+      { rootMargin: "0px 0px -6% 0px" },
     );
     observer.observe(el);
     return () => observer.disconnect();

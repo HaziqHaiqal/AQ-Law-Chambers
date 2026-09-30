@@ -1,12 +1,13 @@
 @import "tailwindcss";
 
+/* Palette taken strictly from the A&Q crest: navy, regal gold, slate grey, white. */
 @theme inline {
   --color-navy: #0a192f;
   --color-navy-2: #1b263b;
   --color-navy-3: #243350;
   --color-gold: #d4af37;
   --color-gold-ink: #8a701f;
-  --color-slate: #637080;
+  --color-slate: #5d6a7a;
   --color-slate-light: #b0bbc9;
   --color-mist: #f7f8fa;
   --color-line: #e2e5e9;
@@ -33,7 +34,7 @@ body {
 
 :focus-visible {
   outline: 2px solid var(--color-gold-ink);
-  outline-offset: 5px;
+  outline-offset: 4px;
 }
 
 button,
@@ -66,6 +67,7 @@ summary::-webkit-details-marker {
   transform: translateY(0);
 }
 
+/* ---------- Header ---------- */
 .site-navigation {
   margin-left: auto;
 }
@@ -108,44 +110,105 @@ summary::-webkit-details-marker {
   display: none;
 }
 
-.hero-art-grid {
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  background-image:
-    linear-gradient(to right, rgb(255 255 255 / 3%) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(255 255 255 / 3%) 1px, transparent 1px);
-  background-size: 25% 25%;
-}
+/* ---------- Hero ---------- */
 .hero-arch {
   position: absolute;
   z-index: -1;
-  top: 17%;
-  left: 14%;
-  width: 72%;
-  height: 94%;
-  border: 1px solid rgb(212 175 55 / 26%);
-  border-radius: 50% 50% 0 0 / 39% 39% 0 0;
+  top: 9%;
+  left: 17%;
+  width: 66%;
+  height: 100%;
+  border: 1px solid rgb(212 175 55 / 22%);
+  border-bottom: 0;
+  border-radius: 50% 50% 0 0 / 30% 30% 0 0;
 }
 .hero-arch::after {
   content: "";
   position: absolute;
-  inset: 12px;
-  border: 1px solid rgb(212 175 55 / 10%);
+  inset: 12px 12px 0;
+  border: 1px solid rgb(212 175 55 / 9%);
+  border-bottom: 0;
   border-radius: inherit;
 }
-.hero-orbit {
-  position: absolute;
-  z-index: -1;
-  top: 23%;
-  left: -24%;
-  width: 148%;
-  height: 53%;
-  border: 1px solid rgb(255 255 255 / 8%);
-  border-radius: 50%;
-  transform: rotate(-34deg);
+
+/* Headline words rise from behind a mask, one after another. */
+.word-mask {
+  display: inline-block;
+  overflow: hidden;
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
+  vertical-align: bottom;
+}
+.word-mask > span {
+  display: inline-block;
+  animation: word-in 900ms cubic-bezier(0.2, 0.75, 0.15, 1) both;
+}
+@keyframes word-in {
+  from {
+    transform: translateY(105%);
+  }
 }
 
+/* Capability ticker */
+.ticker {
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+.ticker-track {
+  display: flex;
+  width: max-content;
+  animation: ticker 55s linear infinite;
+}
+.ticker:hover .ticker-track {
+  animation-play-state: paused;
+}
+@keyframes ticker {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Live "open now" dot */
+.live-dot {
+  position: relative;
+}
+.live-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: inherit;
+  animation: live-ping 2.2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+@keyframes live-ping {
+  75%,
+  100% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+
+/* ---------- Back to top ---------- */
+/* The gold ring fills with reading progress where scroll-driven animation is supported. */
+.progress-ring circle + circle {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+@supports (animation-timeline: scroll()) {
+  .progress-ring circle + circle {
+    animation: ring-fill linear both;
+    animation-timeline: scroll(root block);
+  }
+}
+@keyframes ring-fill {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+#main-content:focus {
+  outline: none;
+}
+
+/* ---------- Forms ---------- */
 .enquiry-input {
   display: block;
   width: 100%;
@@ -153,24 +216,43 @@ summary::-webkit-details-marker {
   border: 1px solid var(--color-line);
   border-radius: 2px;
   background: white;
-  padding: 12px;
-  font-size: 12px;
-  line-height: 1.6;
+  padding: 12px 14px;
+  /* 16px on small screens stops iOS zooming into focused fields. */
+  font-size: 16px;
+  line-height: 1.5;
   color: var(--color-navy);
   transition: border-color 180ms;
 }
 .enquiry-input::placeholder {
-  color: #747e8b;
+  color: #8a94a1;
 }
 .enquiry-input:focus {
-  border-color: var(--color-gold-ink);
-  outline: 1px solid var(--color-gold-ink);
+  border-color: var(--color-navy);
+  outline: 1px solid var(--color-navy);
   outline-offset: 0;
 }
+@media (min-width: 640px) {
+  .enquiry-input {
+    font-size: 15px;
+  }
+}
 
-/* Content stays readable before hydration and when JavaScript is unavailable. */
+/* ---------- Scroll reveal ----------
+   Hidden only when scripting is available, so content never disappears without JavaScript,
+   and each block fades in once — without flashing — as it enters the viewport. */
+@media (scripting: enabled) {
+  .reveal:not([data-visible="true"]) {
+    opacity: 0;
+  }
+}
 .reveal[data-visible="true"] {
-  animation: reveal-in 650ms both;
+  animation: reveal-in 750ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.hero-copy {
+  animation: reveal-in 800ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.hero-art {
+  animation: reveal-in 1000ms cubic-bezier(0.2, 0.7, 0.2, 1) 150ms both;
 }
 @keyframes reveal-in {
   from {
@@ -182,13 +264,17 @@ summary::-webkit-details-marker {
     transform: translateY(0);
   }
 }
-.hero-copy {
-  animation: reveal-in 750ms both;
+.fade-swap {
+  animation: fade-swap 450ms ease-out both;
 }
-.hero-art {
-  animation: reveal-in 900ms both;
+@keyframes fade-swap {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
 }
 
+/* ---------- Responsive navigation ---------- */
 @media (max-width: 1199px) {
   .mobile-menu-trigger {
     display: grid;
@@ -240,26 +326,15 @@ summary::-webkit-details-marker {
   }
 }
 
-@media (min-width: 640px) and (max-width: 1023px) {
-  .hero-art {
-    max-height: 430px;
-    aspect-ratio: 1.4;
-    width: 100%;
-  }
-}
-
 @media (max-width: 639px) {
   html {
     scroll-padding-top: 104px;
   }
-  .hero-art {
-    aspect-ratio: 1.04;
-  }
-  .hero-arch {
-    top: 11%;
-  }
-  .hero-art > div.relative {
-    transform: translateY(-5px);
+}
+
+@media print {
+  .reveal {
+    opacity: 1 !important;
   }
 }
 

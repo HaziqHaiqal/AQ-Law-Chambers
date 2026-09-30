@@ -1,3 +1,4 @@
+import { BackToTop } from "@/components/back-to-top";
 import { Contact } from "@/components/contact";
 import { Emergency } from "@/components/emergency";
 import { Expertise } from "@/components/expertise";
@@ -22,6 +23,7 @@ export default function Home() {
         <Contact />
       </main>
       <Footer />
+      <BackToTop />
     </>
   );
 }

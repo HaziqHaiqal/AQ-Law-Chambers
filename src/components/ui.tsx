@@ -28,9 +28,9 @@ export function Eyebrow({
 }) {
   return (
     <p
-      className={`flex items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.2em] ${tone === "light" ? "text-gold" : "text-gold-ink"}`}
+      className={`flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] ${tone === "light" ? "text-gold" : "text-gold-ink"}`}
     >
-      <span aria-hidden="true" className="h-px w-7 bg-current" />
+      <span aria-hidden="true" className="h-px w-6 bg-current" />
       {children}
     </p>
   );
@@ -55,7 +55,7 @@ export function SectionHeading({
         <Eyebrow tone={tone}>{eyebrow}</Eyebrow>
       </div>
       <h2
-        className={`mt-5 font-serif text-[2.25rem] font-normal leading-[1.14] tracking-[-0.035em] sm:text-[2.75rem] lg:text-[3.15rem] ${
+        className={`mt-5 text-balance font-serif text-[2.1rem] font-normal leading-[1.14] tracking-[-0.025em] sm:text-[2.6rem] lg:text-[2.9rem] ${
           tone === "light" ? "text-white" : "text-navy"
         }`}
       >
@@ -63,7 +63,7 @@ export function SectionHeading({
       </h2>
       {intro && (
         <p
-          className={`mt-5 max-w-xl text-[0.94rem] leading-[1.85] ${tone === "light" ? "text-slate-light" : "text-slate"}`}
+          className={`mt-5 max-w-xl text-base leading-[1.8] ${tone === "light" ? "text-slate-light" : "text-slate"}`}
         >
           {intro}
         </p>
@@ -102,7 +102,7 @@ export function ArrowLink({
   return (
     <a
       href={href}
-      className={`group inline-flex items-center gap-2 text-sm font-semibold ${
+      className={`group inline-flex items-center gap-2 text-[15px] font-medium ${
         tone === "light"
           ? "text-white hover:text-gold"
           : "text-navy hover:text-gold-ink"
