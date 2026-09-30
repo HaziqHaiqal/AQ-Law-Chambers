@@ -112,6 +112,13 @@ export const partners = [
   {
     name: "Nur Afiqah binti Saidin",
     initials: "NA",
+    portrait: "/partners/nur-afiqah.jpg",
+    portraitPosition: "50% 50%",
+    portraitScale: 1,
+    portraitOrigin: "50% 50%",
+    contactName: "Nur Afiqah",
+    focus: "Emergency High Court litigation",
+    summary: "Clear strategy and decisive representation when urgent court protection matters most.",
     role: "Partner · Advocate & Solicitor",
     bio: "Nur Afiqah leads the firm's emergency High Court practice. She advises clients from the first hours of a fraud — building the evidential record, settling the Certificate of Urgency and presenting ex parte applications for freezing, search and disclosure relief.",
     expertise: [
@@ -124,6 +131,13 @@ export const partners = [
   {
     name: "Nur Qisdina Batrisyia binti Arzmisam",
     initials: "NQ",
+    portrait: "/partners/nur-qisdina.jpg",
+    portraitPosition: "50% 50%",
+    portraitScale: 2.05,
+    portraitOrigin: "50% 34%",
+    contactName: "Nur Qisdina",
+    focus: "Digital assets & forensic evidence",
+    summary: "Connecting technical evidence with legal strategy to pursue assets across borders.",
     role: "Partner · Advocate & Solicitor",
     bio: "Nur Qisdina leads the firm's digital asset and evidence work. She coordinates with forensic experts to trace misappropriated funds across wallets and exchanges, and ensures digital evidence is extracted, preserved and presented so it stands up in court.",
     expertise: [
