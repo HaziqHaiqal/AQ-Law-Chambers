@@ -37,14 +37,18 @@ export function Hero() {
               <Fragment key={li}>
                 {li > 0 && <br />}
                 {line.map((word, wi) => {
-                  const position = headline.slice(0, li).reduce((n, l) => n + l.length, 0) + wi;
+                  const position =
+                    headline.slice(0, li).reduce((n, l) => n + l.length, 0) +
+                    wi;
                   const delay = 120 + position * 70;
                   return (
                     <Fragment key={word.text}>
                       {wi > 0 && " "}
                       <span className="word-mask whitespace-nowrap">
                         <span
-                          className={word.em ? "italic text-gold-ink" : undefined}
+                          className={
+                            word.em ? "italic text-gold-ink" : undefined
+                          }
                           style={{ animationDelay: `${delay}ms` }}
                         >
                           {word.text}
@@ -57,8 +61,8 @@ export function Hero() {
             ))}
           </h1>
           <p className="mt-7 max-w-[32rem] text-lg leading-[1.7] text-slate">
-            Cross-Border Digital Asset Recovery, Emergency Mareva Injunctions
-            &amp; Specialised High Court Litigation.
+            Specialised in cross-border asset recovery, emergency asset
+            freezing, and complex commercial litigation.
           </p>
           <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-5">
             <a href="#contact" className={buttonStyles.primary}>
@@ -78,7 +82,11 @@ export function Hero() {
         <div className="hero-art relative isolate flex min-h-[500px] flex-col overflow-hidden bg-navy text-white lg:min-h-[560px]">
           <div className="hero-arch" aria-hidden="true" />
           <div className="flex flex-1 flex-col items-center justify-center px-8 pb-6 pt-12">
-            <Crest light preload className="w-[118px] sm:w-[140px] lg:w-[156px]" />
+            <Crest
+              light
+              preload
+              className="w-[118px] sm:w-[140px] lg:w-[156px]"
+            />
             <p className="mt-6 font-display text-lg font-semibold tracking-[0.06em] sm:text-xl">
               A&amp;Q LAW CHAMBERS
             </p>
@@ -111,7 +119,10 @@ export function Hero() {
 
       {/* Capability ticker */}
       <div className="border-y border-line">
-        <div className="ticker overflow-hidden py-5" aria-label="Key capabilities">
+        <div
+          className="ticker overflow-hidden py-5"
+          aria-label="Key capabilities"
+        >
           <ul className="ticker-track">
             {[0, 1].map((copy) =>
               capabilities.map((c) => (
@@ -121,7 +132,10 @@ export function Hero() {
                   className="flex shrink-0 items-center gap-8 pr-8 font-serif text-xl italic text-slate sm:text-[1.35rem]"
                 >
                   {c}
-                  <span aria-hidden="true" className="size-1.5 rotate-45 bg-gold" />
+                  <span
+                    aria-hidden="true"
+                    className="size-1.5 rotate-45 bg-gold"
+                  />
                 </li>
               )),
             )}

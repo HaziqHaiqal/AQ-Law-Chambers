@@ -179,7 +179,7 @@ export const teamMembers = [
     name: "Mike Kelvin Frederick",
     contactName: "Mike Kelvin",
     initials: "MK",
-    role: "Senior Partner",
+    role: "Junior Partner",
   },
   {
     name: "Sheikh Shabil bin Shahrin",

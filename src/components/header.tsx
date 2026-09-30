@@ -2,7 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { firm, nav, practiceAreas, sectors } from "@/content/site";
-import { ArrowUpRight, ChevronDown, Close, Menu, Phone } from "./icons";
+import { ArrowUpRight, ChevronDown } from "./icons";
+import { MobileMenu } from "./mobile-menu";
 import { BrandMark, Container, buttonStyles } from "./ui";
 
 const menus = [
@@ -21,12 +22,16 @@ const menus = [
 export function Header() {
   const [open, setOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
+  // Where the header ends on screen; the open menu starts just below it.
+  const [menuOffset, setMenuOffset] = useState(0);
   const header = useRef<HTMLElement>(null);
+  const mobileMenu = useRef<HTMLDivElement>(null);
   const mobileTrigger = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const onPointer = (event: PointerEvent) => {
-      if (!header.current?.contains(event.target as Node)) {
+      const target = event.target as Node;
+      if (!header.current?.contains(target) && !mobileMenu.current?.contains(target)) {
         setOpen(false);
         setActiveMenu(null);
       }
@@ -57,6 +62,14 @@ export function Header() {
       document.removeEventListener("keydown", onKey);
     };
   }, [open, activeMenu]);
+
+  // Stop the page scrolling behind the open mobile menu.
+  useEffect(() => {
+    document.documentElement.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.documentElement.style.overflow = "";
+    };
+  }, [open]);
 
   function closeNavigation() {
     setOpen(false);
@@ -89,7 +102,9 @@ export function Header() {
       </div>
       <header
         ref={header}
-        className="site-header sticky top-0 z-50 border-b border-line bg-white/95 backdrop-blur-xl"
+        className={`site-header sticky top-0 border-b backdrop-blur-xl transition-colors duration-300 ${
+          open ? "z-[70] border-white/10 bg-navy" : "z-50 border-line bg-white/95"
+        }`}
       >
         <Container className="flex h-[84px] items-center justify-between gap-6">
           <a
@@ -98,12 +113,12 @@ export function Header() {
             className="shrink-0"
             onClick={closeNavigation}
           >
-            <BrandMark />
+            <BrandMark light={open} />
           </a>
           <nav
             id="primary-navigation"
             aria-label="Primary"
-            className={`site-navigation ${open ? "is-open" : ""}`}
+            className="site-navigation"
           >
             <ul className="navigation-list">
               <li>
@@ -186,27 +201,30 @@ export function Header() {
                 </a>
               </li>
             </ul>
-            <a href={`tel:${firm.hotlineTel}`} className="mobile-nav-hotline">
-              <Phone className="size-4 text-gold-ink" />
-              24/7 Hotline: {firm.hotline}
-            </a>
           </nav>
           <button
             ref={mobileTrigger}
+            id="mobile-menu-toggle"
             type="button"
-            className="mobile-menu-trigger grid size-11 place-items-center border border-line"
-            aria-label={open ? "Close navigation" : "Open navigation"}
+            className="mobile-menu-trigger -mr-2.5 size-11 place-items-center"
+            aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
-            aria-controls="primary-navigation"
+            aria-controls="mobile-menu"
             onClick={() => {
+              if (!open) setMenuOffset(Math.max(0, header.current?.getBoundingClientRect().bottom ?? 0));
               setOpen(!open);
               setActiveMenu(null);
             }}
           >
-            {open ? <Close className="size-5" /> : <Menu className="size-5" />}
+            {/* Two lines that rotate into an X when the menu opens. */}
+            <span aria-hidden="true" className={`menu-toggle-icon ${open ? "is-open" : ""}`}>
+              <span />
+              <span />
+            </span>
           </button>
         </Container>
       </header>
+      <MobileMenu ref={mobileMenu} open={open} offsetTop={menuOffset} onClose={closeNavigation} />
     </>
   );
 }
