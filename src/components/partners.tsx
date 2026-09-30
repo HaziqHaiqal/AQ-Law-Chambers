@@ -54,7 +54,7 @@ export function Partners() {
                     <span className={styles.portraitFrame} aria-hidden="true" />
                   </div>
                   <div className={styles.profileIntro}>
-                    <p className={styles.role}>Partner</p>
+                    <p className={styles.role}>{partner.title}</p>
                     <h3 id={`partner-name-${index}`} className={styles.partnerName}>
                       {partner.name}
                     </h3>
@@ -83,13 +83,6 @@ export function Partners() {
                   </summary>
                   <div className={styles.profileBody}>
                     <p className={styles.biography}>{partner.bio}</p>
-                    <h4 className={styles.detailHeading}>Areas of expertise</h4>
-                    <ul className={styles.expertiseList}>
-                      {partner.expertise.map((item) => (
-                        <li key={item}>{item}</li>
-                      ))}
-                    </ul>
-                    <p className={styles.qualification}>{partner.qualifications[0]}</p>
                   </div>
                 </details>
               </article>

@@ -1,15 +1,17 @@
-// Public-site copy. Firm details come from the A&Q Law Chambers requirements brief.
-// Items marked "[to confirm]" are placeholders the firm must supply before launch.
+// Public-site copy. Firm details come from the A&Q Law Chambers requirements brief and the firm's
+// content document (areas of expertise, team profiles, testimonies and contact numbers).
 
 export const firm = {
   name: "A&Q Law Chambers",
   legalName: "A&Q LAW CHAMBERS",
   tagline: "Advocates & Solicitors",
   address: ["AL530 Kompleks Al-Farabi", "Jalan Ilmu 1", "40450 Shah Alam, Selangor"],
-  phone: "03-5033330",
-  // The brief gives one number; it doubles as the 24/7 hotline until a dedicated line is supplied.
-  hotline: "03-5033330",
-  hotlineTel: "+6035033330",
+  phone: "03-7954 5405",
+  phoneTel: "+60379545405",
+  fax: "03-7954 0405",
+  // The firm has one main line; it doubles as the 24/7 hotline until a dedicated number is supplied.
+  hotline: "03-7954 5405",
+  hotlineTel: "+60379545405",
   email: "aqlawchambers@gmail.com",
   hours: "Office: Mon – Fri, 9:00am – 6:00pm",
   mapsUrl:
@@ -33,29 +35,79 @@ export const nav = {
   ],
 };
 
-export const practiceAreas = [
+export type PracticeArea = {
+  id: string;
+  short: string;
+  title: string;
+  subtitle?: string;
+  body: string[];
+  /** Optional list shown as tags beneath the description. */
+  list?: { label: string; items: string[] };
+};
+
+export const practiceAreas: PracticeArea[] = [
   {
-    id: "injunctions",
-    short: "Injunctions & freezing orders",
-    title: "Ex Parte Injunctions & Freezing Orders",
-    subtitle: "Mareva & Anton Piller",
-    body: "Urgent without-notice applications to stop assets being dissipated and evidence being destroyed — domestic and worldwide freezing orders, search orders and preservation relief.",
+    id: "arbitration",
+    short: "Mediation & arbitration",
+    title: "Mediation & Arbitration",
+    subtitle: "KLRCA · SIAC · ICC · ICC-CMI · UNCITRAL",
+    body: [
+      "Our Arbitration & Mediation Practice Group delivers innovative, custom-made solutions to serve each client’s specific needs. Our lawyers are responsive, effective and strategic.",
+      "Our lawyers are members of the world’s major arbitral institutions and have experience arbitrating in proceedings held under the KLRCA, SIAC, ICC, ICC-CMI and UNCITRAL rules, cementing our solid reputation as a leading international arbitration practice.",
+    ],
   },
   {
-    id: "disclosure",
-    short: "Bank & exchange disclosure",
-    title: "Third-Party & Exchange Disclosure",
-    subtitle: "Bankers Trust Orders / Norwich Pharmacal",
-    body: "Compelling banks, cryptocurrency exchanges and intermediaries to disclose KYC and account information needed to trace funds and identify wrongdoers.",
+    id: "employment",
+    short: "Employment",
+    title: "Employment & Industrial Relations",
+    body: [
+      "Our Employment & Industrial Relations Practice Group continues to offer comprehensive representation and assistance to clients involved in various stages of employment-related dispute resolution.",
+      "We have been engaged in cases that have contributed to the evolution and expansion of administrative law in this country. The practice continues to keep abreast of changes to the law to regularly advise clients on the nature and implications of key amendments.",
+    ],
   },
   {
-    id: "evidence",
-    short: "Digital evidence",
-    title: "Secondary Digital Evidence & Discovery",
-    subtitle: "Sections 65 & 66 Evidence Act 1950",
-    body: "Securing and proving digital evidence — secondary evidence, notices to produce, and forensic preservation of devices, wallets and cloud accounts.",
+    id: "insurance",
+    short: "Insurance",
+    title: "Insurance",
+    subtitle: "Insurance, reinsurance & takaful",
+    body: [
+      "Our dedicated insurance team is experienced in regulatory and compliance advisory and insurance disputes. We offer comprehensive and efficient services to industry participants, from regulatory and compliance frameworks to their implementation and enforcement, as well as the assessment of coverage and the handling of disputes.",
+      "We handle both insurance and reinsurance law, and are familiar with conventional and takaful products.",
+    ],
+    list: {
+      label: "Products we advise on include",
+      items: [
+        "Aviation insurance",
+        "Bankers bond policies",
+        "General liability",
+        "Cyber liability",
+        "Directors & officers liability",
+        "Marine insurance",
+        "Comprehensive crime",
+        "Professional indemnity",
+        "Professional malpractice",
+      ],
+    },
   },
-] as const;
+  {
+    id: "litigation",
+    short: "Civil litigation",
+    title: "Civil Litigation",
+    body: [
+      "Whatever the disagreement or dispute, we will seek to understand your unique position and the expectations that you may have. We will tailor our pre-court strategic analysis and litigation plan to suit your specific situation and to achieve the resolution and remedy that you desire.",
+      "At A&Q Law Chambers, we take pride in our client care and will ensure that our clients are always informed and in control of their case.",
+    ],
+  },
+  {
+    id: "real-estate",
+    short: "Real estate",
+    title: "Real Estate",
+    body: [
+      "Our Real Estate Practice Group provides a full range of corporate real estate services. Leveraging their combined depth and breadth of experience, our lawyers in this practice have provided significant advice on many of the nation’s largest property transactions.",
+      "We also advise on and assist clients with integral real estate matters, such as applications for the regulatory approvals required from the relevant Government and statutory bodies — including the Economic Planning Unit of the Prime Minister’s Department, Bank Negara Malaysia, State Authorities and the Estate Land Board.",
+    ],
+  },
+];
 
 export const sectors = [
   {
@@ -92,66 +144,33 @@ export const overview = {
   ],
 };
 
-export const capabilities = [
-  { label: "Mareva & Anton Piller orders", href: "#injunctions" },
-  { label: "Bankers Trust & Norwich Pharmacal", href: "#disclosure" },
-  { label: "Digital evidence & discovery", href: "#evidence" },
-  { label: "Crypto & Web3 asset recovery", href: "#crypto" },
-];
-
-export const advantage = {
-  local: {
-    label: "Local strength",
-    title: "High Court emergency relief",
-    body: "Deep familiarity with urgent applications before the Malaysian High Court under Order 29 ROC, alongside the equivalent jurisdiction in England & Wales (SCA 1981 s 37).",
-    points: ["Certificate of Urgency filings", "Urgent ex parte hearings", "Inter partes return-date strategy"],
-  },
-  global: {
-    label: "Cross-border reach",
-    title: "Offshore crypto asset recovery",
-    body: "Tracing assets across chains and jurisdictions, and serving orders on overseas exchanges through extra-territorial service-out gateways.",
-    points: ["Blockchain forensic tracing", "Alternative service on offshore exchanges", "Multi-jurisdictional enforcement"],
-  },
-};
-
+// Partner roles and biographies are as supplied by the firm.
 export const partners = [
   {
     name: "Nur Afiqah binti Saidin",
+    title: "Managing Partner",
     initials: "NA",
-    portrait: "/partners/afiqah-saidin.jpg",
+    portrait: "/partners/afiqah.jpg",
     portraitPosition: "50% 100%",
     portraitScale: 1,
     portraitOrigin: "50% 50%",
     contactName: "Nur Afiqah",
-    focus: "Emergency High Court litigation",
-    summary: "Clear strategy and decisive representation when urgent court protection matters most.",
-    role: "Partner · Advocate & Solicitor",
-    bio: "Nur Afiqah leads the firm's emergency High Court practice. She advises clients from the first hours of a fraud — building the evidential record, settling the Certificate of Urgency and presenting ex parte applications for freezing, search and disclosure relief.",
-    expertise: [
-      "Emergency High Court litigation",
-      "Ex parte application strategy",
-      "Extra-territorial service-out gateways (CPR PD 6B / ROC)",
-    ],
-    qualifications: ["Advocate & Solicitor, High Court of Malaya", "LL.B. (Hons) — [to confirm]", "Certificate / Bar admission year — [to confirm]"],
+    focus: "Employment, civil litigation & dispute resolution",
+    summary: "Leads the firm with a strong commitment to delivering strategic, results-driven legal solutions.",
+    bio: "Nur Afiqah, the managing partner of A&Q Law Chambers, leads the firm with a strong commitment to delivering strategic, results-driven legal solutions while overseeing its overall direction and operations. She completed her Pupillage at the renowned Haresh Mahadevan & Co, gaining substantial exposure to both contentious and non-contentious work prior to her admission to the Malaysian Bar. Her areas of practice include Employment & Industrial Relation, Civil litigation and Dispute Resolution.",
   },
   {
     name: "Nur Qisdina Batrisyia binti Arzmisam",
+    title: "Senior Partner",
     initials: "NQ",
-    portrait: "/partners/qisdina-arzmisam.jpg",
+    portrait: "/partners/qisdina.jpg",
     portraitPosition: "50% 100%",
     portraitScale: 1,
     portraitOrigin: "50% 50%",
     contactName: "Nur Qisdina",
-    focus: "Digital assets & forensic evidence",
-    summary: "Connecting technical evidence with legal strategy to pursue assets across borders.",
-    role: "Partner · Advocate & Solicitor",
-    bio: "Nur Qisdina leads the firm's digital asset and evidence work. She coordinates with forensic experts to trace misappropriated funds across wallets and exchanges, and ensures digital evidence is extracted, preserved and presented so it stands up in court.",
-    expertise: [
-      "Blockchain forensic integration (LIFO tracing)",
-      "Digital evidence extraction protocols",
-      "Exchange & third-party disclosure",
-    ],
-    qualifications: ["Advocate & Solicitor, High Court of Malaya", "LL.B. (Hons) — [to confirm]", "Certificate / Bar admission year — [to confirm]"],
+    focus: "Real estate & insurance",
+    summary: "Advising on property transactions, financing arrangements and insurance-related disputes.",
+    bio: "Nur Qisdina Batrisyia, a senior partner, focuses on real estate and insurance matters, advising clients on property transactions, financing arrangements, and insurance-related disputes with a practical and solutions-oriented approach. She completed her pupillage at Zaid Ibrahim & Co., where she gained valuable exposure to Civil litigation, conveyancing and insurance litigation before being admitted to the Malaysian Bar. Her practice is defined by meticulous attention to detail, strong commercial awareness, and a commitment to delivering clear, efficient, and results-oriented legal solutions.",
   },
 ];
 
@@ -193,6 +212,30 @@ export const teamMembers = [
     role: "Legal Associate",
   },
 ] as const;
+
+export const testimonials = [
+  {
+    quote:
+      "Saya amat berpuas hati dengan khidmat firma ini. Mereka bertindak pantas memfailkan Permohonan Injunksi Mareva untuk melindungi kepentingan saya.",
+    lang: "ms",
+    name: "Dato’ Fazz Fairiz",
+    role: "Founder, Fazz’s Jewels",
+  },
+  {
+    quote:
+      "From the first consultation to the court’s decision, I could see the team’s strong commitment and professionalism. I would not hesitate to recommend this firm to others.",
+    lang: "en",
+    name: "Angelica Jonie",
+    role: "Director, Angie’s Beauty",
+  },
+  {
+    quote:
+      "I am grateful to A&Q Law Chambers for their guidance and enlightenment on my employment contract. They not only understood the legal aspect but were also sensitive to the emotional challenges involved.",
+    lang: "en",
+    name: "Natalia Hudsin",
+    role: "Head of Account Department, Lim and Lee Accounting Firm",
+  },
+];
 
 export const emergencySteps = [
   {

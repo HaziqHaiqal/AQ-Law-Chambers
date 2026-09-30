@@ -65,10 +65,11 @@ export function Footer() {
             <h3 className={headingClass}>Get in touch</h3>
             <ul className="mt-5 grid gap-3 text-[15px]">
               <li>
-                <a href={`tel:${firm.hotlineTel}`} className="transition-colors hover:text-gold-ink">
-                  {firm.phone}
+                <a href={`tel:${firm.phoneTel}`} className="transition-colors hover:text-gold-ink">
+                  Tel: {firm.phone}
                 </a>
               </li>
+              <li className="text-slate">Fax: {firm.fax}</li>
               <li>
                 <a href={`mailto:${firm.email}`} className="break-all transition-colors hover:text-gold-ink">
                   {firm.email}

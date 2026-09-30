@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     template: "%s | A&Q Law Chambers",
   },
   description:
-    "Cross-border digital asset recovery, emergency Mareva injunctions and specialised High Court litigation. 24/7 Ex Parte Injunction Hotline: 03-5033330.",
+    "A&Q Law Chambers, Advocates & Solicitors in Shah Alam: civil litigation, mediation & arbitration, employment, insurance and real estate, with a 24/7 Ex Parte Injunction Hotline on 03-7954 5405.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

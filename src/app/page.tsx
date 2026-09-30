@@ -8,6 +8,7 @@ import { Header } from "@/components/header";
 import { Hero } from "@/components/hero";
 import { Partners } from "@/components/partners";
 import { Proceedings } from "@/components/proceedings";
+import { Testimonials } from "@/components/testimonials";
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
         <Firm />
         <Expertise />
         <Partners />
+        <Testimonials />
         <Proceedings />
         <Emergency />
         <Contact />

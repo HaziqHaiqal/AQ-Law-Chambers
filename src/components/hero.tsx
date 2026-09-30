@@ -12,14 +12,14 @@ const headline: { text: string; em?: boolean }[][] = [
 ];
 
 const capabilities = [
+  "Civil litigation",
+  "Mediation & arbitration",
+  "Employment & industrial relations",
+  "Insurance & takaful",
+  "Real estate & conveyancing",
   "Mareva injunctions",
-  "Anton Piller orders",
-  "Worldwide freezing orders",
-  "Bankers Trust orders",
-  "Norwich Pharmacal relief",
-  "Digital evidence & discovery",
   "Crypto & Web3 asset recovery",
-  "ESG & carbon fraud litigation",
+  "ESG & financial fraud",
   "Cloud & technology disputes",
 ];
 

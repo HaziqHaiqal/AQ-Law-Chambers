@@ -2,7 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import { firm, practiceAreas, sectors } from "@/content/site";
-import { ArrowRight, ArrowUpRight, Clock, Mail, Phone } from "./icons";
+import { ArrowRight, ArrowUpRight, Clock, Mail, Phone, Printer } from "./icons";
 import { Reveal } from "./reveal";
 import { ButtonArrow, Container, Crest, SectionHeading, buttonStyles } from "./ui";
 
@@ -36,7 +36,8 @@ export function Contact() {
 
   const details = [
     { icon: Mail, label: "Email", value: firm.email, href: `mailto:${firm.email}` },
-    { icon: Phone, label: "Telephone", value: firm.phone, href: `tel:${firm.hotlineTel}` },
+    { icon: Phone, label: "Telephone", value: firm.phone, href: `tel:${firm.phoneTel}` },
+    { icon: Printer, label: "Fax", value: firm.fax },
     { icon: Clock, label: "Office hours", value: "Monday – Friday, 9:00am – 6:00pm" },
   ];
 
