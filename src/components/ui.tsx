@@ -128,32 +128,33 @@ export function Crest({
 }) {
   return (
     <Image
-      src={light ? "/brand/crest-light.png" : "/brand/crest.png"}
+      src={light ? "/brand/logo-light.png" : "/brand/logo-dark.png"}
       alt="A&Q Law Chambers crest"
-      width={245}
-      height={294}
+      width={453}
+      height={536}
       preload={preload}
-      sizes="(max-width: 640px) 160px, 245px"
+      sizes="(max-width: 640px) 160px, 288px"
       className={`h-auto ${className}`}
     />
   );
 }
 
-/** Crest + wordmark set in Cinzel, matching the logo lockup. */
+/** Crest beside the logo's wordmark: "A&Q" over a gold rule and "LAW · CHAMBERS", set in Cinzel to match. */
 export function BrandMark({ light = false }: { light?: boolean }) {
   return (
-    <span className="flex items-center gap-2.5 sm:gap-3">
+    <span className="flex items-center gap-3">
       <Crest light={light} preload className="w-9 sm:w-10" />
-      <span className="leading-none">
-        <span
-          className={`block font-display text-[0.8rem] font-semibold tracking-[0.04em] sm:text-[0.93rem] ${light ? "text-white" : "text-navy"}`}
-        >
-          A&amp;Q LAW CHAMBERS
+      <span className={`flex flex-col items-center font-display leading-none ${light ? "text-white" : "text-navy"}`}>
+        <span className="text-[1.4rem] font-bold tracking-[0.06em] sm:text-[1.55rem]">A&amp;Q</span>
+        <span aria-hidden="true" className="mt-1 flex w-full items-center gap-1">
+          <span className="h-px flex-1 bg-gold" />
+          <span className="size-[3px] rounded-full bg-gold" />
+          <span className="h-px flex-1 bg-gold" />
         </span>
-        <span
-          className={`mt-2 block text-[0.52rem] font-medium uppercase tracking-[0.2em] ${light ? "text-slate-light" : "text-slate"}`}
-        >
-          Advocates &amp; Solicitors
+        <span className="mt-1 flex items-center gap-1 text-[0.5rem] font-semibold tracking-[0.14em] sm:text-[0.55rem]">
+          LAW
+          <span aria-hidden="true" className="size-[3px] rounded-full bg-gold" />
+          CHAMBERS
         </span>
       </span>
     </span>

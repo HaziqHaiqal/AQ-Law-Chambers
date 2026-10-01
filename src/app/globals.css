@@ -110,36 +110,19 @@ summary::-webkit-details-marker {
 }
 
 /* ---------- Hero ---------- */
-.hero-arch {
-  position: absolute;
-  z-index: -1;
-  top: 9%;
-  left: 17%;
-  width: 66%;
-  height: 100%;
-  border: 1px solid rgb(212 175 55 / 22%);
-  border-bottom: 0;
-  border-radius: 50% 50% 0 0 / 30% 30% 0 0;
+/* The hero is navy, so its focus ring uses the brighter gold. */
+#top a:focus-visible {
+  outline-color: var(--color-gold);
 }
-.hero-arch::after {
-  content: "";
-  position: absolute;
-  inset: 12px 12px 0;
-  border: 1px solid rgb(212 175 55 / 9%);
-  border-bottom: 0;
-  border-radius: inherit;
-}
-
-/* Headline words rise from behind a mask, one after another. */
-.word-mask {
-  display: inline-block;
+/* Headline lines rise from behind a mask. */
+.hero-line {
+  display: block;
   overflow: hidden;
   padding-bottom: 0.12em;
   margin-bottom: -0.12em;
-  vertical-align: bottom;
 }
-.word-mask > span {
-  display: inline-block;
+.hero-line > span {
+  display: block;
   animation: word-in 900ms cubic-bezier(0.2, 0.75, 0.15, 1) both;
 }
 @keyframes word-in {
@@ -157,7 +140,8 @@ summary::-webkit-details-marker {
   width: max-content;
   animation: ticker 55s linear infinite;
 }
-.ticker:hover .ticker-track {
+.ticker:hover .ticker-track,
+.ticker:focus-within .ticker-track {
   animation-play-state: paused;
 }
 @keyframes ticker {
@@ -249,11 +233,7 @@ summary::-webkit-details-marker {
 }
 .hero-copy {
   animation: reveal-in 800ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
-}
-.hero-art {
-  animation: reveal-in 1000ms cubic-bezier(0.2, 0.7, 0.2, 1) 150ms both;
-}
-@keyframes reveal-in {
+}@keyframes reveal-in {
   from {
     opacity: 0;
     transform: translateY(14px);
@@ -382,9 +362,9 @@ summary::-webkit-details-marker {
   transition-delay: calc(120ms + var(--i, 0) * 60ms);
 }
 
-@media (max-width: 639px) {
+@media (max-width: 1199px) {
   html {
-    scroll-padding-top: 104px;
+    scroll-padding-top: 100px;
   }
 }
 
@@ -395,6 +375,13 @@ summary::-webkit-details-marker {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .ticker {
+    overflow-x: auto;
+    mask-image: none;
+  }
+  .ticker-track > [aria-hidden="true"] {
+    display: none;
+  }
   html {
     scroll-behavior: auto;
   }

@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { firm, nav, practiceAreas, sectors } from "@/content/site";
 import { ArrowUpRight, ChevronDown } from "./icons";
 import { MobileMenu } from "./mobile-menu";
-import { BrandMark, Container, buttonStyles } from "./ui";
+import { BrandMark, Container } from "./ui";
 
 const menus = [
   {
@@ -81,7 +81,8 @@ export function Header() {
       <a href="#main-content" className="skip-link">
         Skip to content
       </a>
-      <div className="border-b border-line bg-mist text-[10px] text-slate">
+      {/* Desktop-only info bar; on smaller screens the hotline lives in the menu. */}
+      <div className="hidden border-b border-line bg-mist text-[10px] text-slate xl:block">
         <Container className="flex min-h-9 items-center justify-between gap-4">
           <p className="hidden tracking-[0.04em] sm:block">
             Advocates &amp; Solicitors · Shah Alam, Malaysia
@@ -190,14 +191,13 @@ export function Header() {
                   Our Partners
                 </a>
               </li>
-              <li className="navigation-contact">
+              <li>
                 <a
                   href="#contact"
                   onClick={closeNavigation}
-                  className={`${buttonStyles.primary} w-full`}
+                  className="nav-link"
                 >
-                  Get in touch
-                  <ArrowUpRight className="size-4" />
+                  Contact
                 </a>
               </li>
             </ul>
