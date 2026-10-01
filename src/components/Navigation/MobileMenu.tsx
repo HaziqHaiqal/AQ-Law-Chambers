@@ -1,11 +1,21 @@
 "use client";
 
-import { useState, type CSSProperties, type KeyboardEvent, type Ref } from "react";
-import { firm, practiceAreas, sectors } from "@/content/site";
-import { ArrowRight, Plus } from "./icons";
-import { Container, Crest } from "./ui";
+import {
+  useState,
+  type CSSProperties,
+  type KeyboardEvent,
+  type Ref,
+} from "react";
+import { firm, practiceAreas, sectors } from "@/data/site";
+import { ArrowRight, Plus } from "@/components/Icons";
+import { Container } from "@/components/Layout/Container";
+import { Crest } from "@/components/Brand/Crest";
 
-type Item = { label: string; href: string; children?: readonly { id: string; short: string }[] };
+type Item = {
+  label: string;
+  href: string;
+  children?: readonly { id: string; short: string }[];
+};
 
 const items: Item[] = [
   { label: "The Firm", href: "#firm" },
@@ -40,7 +50,8 @@ export function MobileMenu({
   // Keep keyboard focus within the menu and its toggle button (which stays in the header above).
   function trapFocus(event: KeyboardEvent<HTMLDivElement>) {
     if (event.key !== "Tab" || event.shiftKey) return;
-    const focusable = event.currentTarget.querySelectorAll<HTMLElement>("a[href], button");
+    const focusable =
+      event.currentTarget.querySelectorAll<HTMLElement>("a[href], button");
     if (document.activeElement === focusable[focusable.length - 1]) {
       event.preventDefault();
       document.getElementById("mobile-menu-toggle")?.focus();
@@ -59,18 +70,27 @@ export function MobileMenu({
       style={{ paddingTop: offsetTop }}
       className={`mobile-menu fixed inset-0 z-[60] flex flex-col overflow-hidden bg-navy text-white xl:hidden ${open ? "is-open" : ""}`}
     >
-      <Crest light className="pointer-events-none absolute -bottom-20 -right-16 w-72 opacity-[0.04]" />
+      <Crest
+        light
+        className="pointer-events-none absolute -right-16 -bottom-20 w-72 opacity-[0.04]"
+      />
 
-
-      <nav aria-label="Mobile" className="relative flex min-h-0 flex-1 flex-col">
-        <Container className="menu-body flex flex-1 flex-col pb-6 pt-2">
+      <nav
+        aria-label="Mobile"
+        className="relative flex min-h-0 flex-1 flex-col"
+      >
+        <Container className="menu-body flex flex-1 flex-col pt-2 pb-6">
           <ul>
             {items.map((item, index) => {
               const isExpanded = expanded === item.label;
               const label = (
                 <>
-                  <span className="w-7 shrink-0 text-xs tabular-nums text-gold">0{index + 1}</span>
-                  <span className="menu-label flex-1 font-serif leading-tight tracking-[-0.02em]">{item.label}</span>
+                  <span className="w-7 shrink-0 text-xs text-gold tabular-nums">
+                    0{index + 1}
+                  </span>
+                  <span className="menu-label flex-1 font-serif leading-tight tracking-[-0.02em]">
+                    {item.label}
+                  </span>
                 </>
               );
               return (
@@ -85,7 +105,9 @@ export function MobileMenu({
                         type="button"
                         aria-expanded={isExpanded}
                         aria-controls={`mobile-${item.href.slice(1)}`}
-                        onClick={() => setExpanded(isExpanded ? null : item.label)}
+                        onClick={() =>
+                          setExpanded(isExpanded ? null : item.label)
+                        }
                         className={`menu-row flex w-full items-center text-left transition-colors ${isExpanded ? "text-gold" : "hover:text-gold"}`}
                       >
                         {label}
@@ -124,7 +146,11 @@ export function MobileMenu({
                       </div>
                     </>
                   ) : (
-                    <a href={item.href} onClick={close} className="menu-row flex items-center transition-colors hover:text-gold">
+                    <a
+                      href={item.href}
+                      onClick={close}
+                      className="menu-row flex items-center transition-colors hover:text-gold"
+                    >
                       {label}
                     </a>
                   )}
@@ -133,7 +159,10 @@ export function MobileMenu({
             })}
           </ul>
 
-          <div className="menu-item mt-auto pt-5" style={{ "--i": items.length } as CSSProperties}>
+          <div
+            className="menu-item mt-auto pt-5"
+            style={{ "--i": items.length } as CSSProperties}
+          >
             <a
               href="#contact"
               onClick={close}
@@ -146,8 +175,12 @@ export function MobileMenu({
               href={`tel:${firm.hotlineTel}`}
               className="mt-4 flex items-baseline justify-between gap-4 transition-colors hover:text-gold"
             >
-              <span className="text-[11px] font-medium uppercase tracking-[0.16em] text-gold">24/7 Ex Parte Hotline</span>
-              <span className="font-serif text-2xl leading-none">{firm.hotline}</span>
+              <span className="text-[11px] font-medium tracking-[0.16em] text-gold uppercase">
+                24/7 Ex Parte Hotline
+              </span>
+              <span className="font-serif text-2xl leading-none">
+                {firm.hotline}
+              </span>
             </a>
           </div>
         </Container>

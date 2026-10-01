@@ -1,7 +1,9 @@
-import { overview } from "@/content/site";
-import { Globe, Pillar } from "./icons";
-import { Reveal } from "./reveal";
-import { ArrowLink, Container, SectionHeading } from "./ui";
+import { overview } from "@/data/site";
+import { Globe, Pillar } from "@/components/Icons";
+import { Reveal } from "@/components/Motion/Reveal";
+import { ArrowLink } from "@/components/Buttons/ArrowLink";
+import { Container } from "@/components/Layout/Container";
+import { SectionHeading } from "@/components/Typography/SectionHeading";
 
 export function Firm() {
   return (

@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { firm, nav, practiceAreas, sectors } from "@/content/site";
-import { ArrowUpRight, ChevronDown } from "./icons";
-import { MobileMenu } from "./mobile-menu";
-import { BrandMark, Container } from "./ui";
+import { firm, nav, practiceAreas, sectors } from "@/data/site";
+import { ArrowUpRight, ChevronDown } from "@/components/Icons";
+import { MobileMenu } from "@/components/Navigation/MobileMenu";
+import { BrandMark } from "@/components/Brand/BrandMark";
+import { Container } from "@/components/Layout/Container";
 
 const menus = [
   {
@@ -31,7 +32,10 @@ export function Header() {
   useEffect(() => {
     const onPointer = (event: PointerEvent) => {
       const target = event.target as Node;
-      if (!header.current?.contains(target) && !mobileMenu.current?.contains(target)) {
+      if (
+        !header.current?.contains(target) &&
+        !mobileMenu.current?.contains(target)
+      ) {
         setOpen(false);
         setActiveMenu(null);
       }
@@ -104,7 +108,9 @@ export function Header() {
       <header
         ref={header}
         className={`site-header sticky top-0 border-b backdrop-blur-xl transition-colors duration-300 ${
-          open ? "z-[70] border-white/10 bg-navy" : "z-50 border-line bg-white/95"
+          open
+            ? "z-[70] border-white/10 bg-navy"
+            : "z-50 border-line bg-white/95"
         }`}
       >
         <Container className="flex h-[84px] items-center justify-between gap-6">
@@ -158,7 +164,7 @@ export function Header() {
                     className="nav-dropdown-panel"
                     hidden={activeMenu !== menu.label}
                   >
-                    <p className="mb-4 text-[9px] font-medium uppercase tracking-[0.16em] text-gold-ink">
+                    <p className="mb-4 text-[9px] font-medium tracking-[0.16em] text-gold-ink uppercase">
                       {menu.caption}
                     </p>
                     <a
@@ -211,20 +217,34 @@ export function Header() {
             aria-expanded={open}
             aria-controls="mobile-menu"
             onClick={() => {
-              if (!open) setMenuOffset(Math.max(0, header.current?.getBoundingClientRect().bottom ?? 0));
+              if (!open)
+                setMenuOffset(
+                  Math.max(
+                    0,
+                    header.current?.getBoundingClientRect().bottom ?? 0,
+                  ),
+                );
               setOpen(!open);
               setActiveMenu(null);
             }}
           >
             {/* Two lines that rotate into an X when the menu opens. */}
-            <span aria-hidden="true" className={`menu-toggle-icon ${open ? "is-open" : ""}`}>
+            <span
+              aria-hidden="true"
+              className={`menu-toggle-icon ${open ? "is-open" : ""}`}
+            >
               <span />
               <span />
             </span>
           </button>
         </Container>
       </header>
-      <MobileMenu ref={mobileMenu} open={open} offsetTop={menuOffset} onClose={closeNavigation} />
+      <MobileMenu
+        ref={mobileMenu}
+        open={open}
+        offsetTop={menuOffset}
+        onClose={closeNavigation}
+      />
     </>
   );
 }

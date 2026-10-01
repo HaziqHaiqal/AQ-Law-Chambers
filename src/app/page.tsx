@@ -1,14 +1,14 @@
-import { BackToTop } from "@/components/back-to-top";
-import { Contact } from "@/components/contact";
-import { Emergency } from "@/components/emergency";
-import { Expertise } from "@/components/expertise";
-import { Firm } from "@/components/firm";
-import { Footer } from "@/components/footer";
-import { Header } from "@/components/header";
-import { Hero } from "@/components/hero";
-import { Partners } from "@/components/partners";
-import { Proceedings } from "@/components/proceedings";
-import { Testimonials } from "@/components/testimonials";
+import { BackToTop } from "@/components/Buttons/BackToTop";
+import { Contact } from "@/components/Sections/Contact";
+import { Emergency } from "@/components/Sections/Emergency";
+import { Expertise } from "@/components/Sections/Expertise";
+import { Firm } from "@/components/Sections/Firm";
+import { Footer } from "@/components/Layout/Footer";
+import { Header } from "@/components/Layout/Header";
+import { Hero } from "@/components/Sections/Hero";
+import { Partners } from "@/components/Sections/Partners";
+import { Proceedings } from "@/components/Sections/Proceedings";
+import { Testimonials } from "@/components/Sections/Testimonials";
 
 export default function Home() {
   return (

@@ -116,36 +116,82 @@
   outline-color: #d4bd7c;
 }
 @keyframes headline-in {
-  from { transform: translateY(110%); }
+  from {
+    transform: translateY(110%);
+  }
 }
 @keyframes detail-in {
-  from { opacity: 0; transform: translateY(10px); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
 }
 @keyframes image-in {
-  from { opacity: 0; }
+  from {
+    opacity: 0;
+  }
 }
 @media (min-width: 1700px) {
-  .layout { padding-block: 96px; }
+  .layout {
+    padding-block: 96px;
+  }
 }
 @media (min-width: 640px) and (max-width: 1023px) {
-  .layout { padding-block: 64px; }
-  .copy { --indent: 42px; }
-  .heading { font-size: clamp(68px, 9vw, 86px); }
-  .image { object-position: 58% center; }
+  .layout {
+    padding-block: 64px;
+  }
+  .copy {
+    --indent: 42px;
+  }
+  .heading {
+    font-size: clamp(68px, 9vw, 86px);
+  }
+  .image {
+    object-position: 58% center;
+  }
   .artwork::after {
-    background: linear-gradient(90deg, rgb(10 25 47 / 55%) 10%, rgb(10 25 47 / 12%) 80%);
+    background: linear-gradient(
+      90deg,
+      rgb(10 25 47 / 55%) 10%,
+      rgb(10 25 47 / 12%) 80%
+    );
   }
 }
 @media (max-width: 639px) {
-  .layout { padding-block: 54px 58px; }
-  .copy { --indent: 18px; }
-  .heading { font-size: clamp(42px, 13vw, 72px); }
-  .resolve { margin-top: 24px; margin-left: 0; font-size: clamp(24px, 6.2vw, 32px); }
-  .aside { margin-top: 24px; margin-left: 0; max-width: 325px; }
-  .intro { font-size: 14px; }
-  .primaryLink { margin-top: 26px; }
-  .image { object-position: 66% center; }
+  .layout {
+    padding-block: 54px 58px;
+  }
+  .copy {
+    --indent: 18px;
+  }
+  .heading {
+    font-size: clamp(42px, 13vw, 72px);
+  }
+  .resolve {
+    margin-top: 24px;
+    margin-left: 0;
+    font-size: clamp(24px, 6.2vw, 32px);
+  }
+  .aside {
+    margin-top: 24px;
+    margin-left: 0;
+    max-width: 325px;
+  }
+  .intro {
+    font-size: 14px;
+  }
+  .primaryLink {
+    margin-top: 26px;
+  }
+  .image {
+    object-position: 66% center;
+  }
   .artwork::after {
-    background: linear-gradient(90deg, rgb(10 25 47 / 82%) 15%, rgb(10 25 47 / 58%) 70%, rgb(10 25 47 / 25%));
+    background: linear-gradient(
+      90deg,
+      rgb(10 25 47 / 82%) 15%,
+      rgb(10 25 47 / 58%) 70%,
+      rgb(10 25 47 / 25%)
+    );
   }
 }

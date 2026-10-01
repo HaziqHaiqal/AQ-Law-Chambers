@@ -1,0 +1,10 @@
+# Generated or third-party files
+.next
+node_modules
+pnpm-lock.yaml
+next-env.d.ts
+public
+
+# Written by `next dev`; reformatting them only creates diffs that get overwritten
+AGENTS.md
+CLAUDE.md

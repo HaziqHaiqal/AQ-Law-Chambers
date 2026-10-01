@@ -1,15 +1,15 @@
-// Public-site copy. Firm details come from the A&Q Law Chambers requirements brief and the firm's
-// content document (areas of expertise, team profiles, testimonies and contact numbers).
-
 export const firm = {
   name: "A&Q Law Chambers",
   legalName: "A&Q LAW CHAMBERS",
   tagline: "Advocates & Solicitors",
-  address: ["AL530 Kompleks Al-Farabi", "Jalan Ilmu 1", "40450 Shah Alam, Selangor"],
+  address: [
+    "AL530 Kompleks Al-Farabi",
+    "Jalan Ilmu 1",
+    "40450 Shah Alam, Selangor",
+  ],
   phone: "03-7954 5405",
   phoneTel: "+60379545405",
   fax: "03-7954 0405",
-  // The firm has one main line; it doubles as the 24/7 hotline until a dedicated number is supplied.
   hotline: "03-7954 5405",
   hotlineTel: "+60379545405",
   email: "aqlawchambers@gmail.com",
@@ -137,14 +137,19 @@ export const overview = {
     "Our practice combines High Court emergency relief with the technical capability to trace digital assets across blockchains and borders, so that clients are advised on both the law and the evidence from the first call.",
   ],
   facts: [
-    { label: "Registered name", value: "A&Q Law Chambers (Advocates & Solicitors)" },
+    {
+      label: "Registered name",
+      value: "A&Q Law Chambers (Advocates & Solicitors)",
+    },
     { label: "Office", value: "Shah Alam, Selangor, Malaysia" },
-    { label: "Core focus", value: "Emergency High Court relief & digital asset recovery" },
+    {
+      label: "Core focus",
+      value: "Emergency High Court relief & digital asset recovery",
+    },
     { label: "Availability", value: "24/7 Ex Parte Injunction Hotline" },
   ],
 };
 
-// Partner roles and biographies are as supplied by the firm.
 export const partners = [
   {
     name: "Nur Afiqah binti Saidin",
@@ -156,7 +161,8 @@ export const partners = [
     portraitOrigin: "50% 50%",
     contactName: "Nur Afiqah",
     focus: "Employment, civil litigation & dispute resolution",
-    summary: "Leads the firm with a strong commitment to delivering strategic, results-driven legal solutions.",
+    summary:
+      "Leads the firm with a strong commitment to delivering strategic, results-driven legal solutions.",
     bio: "Nur Afiqah, the managing partner of A&Q Law Chambers, leads the firm with a strong commitment to delivering strategic, results-driven legal solutions while overseeing its overall direction and operations. She completed her Pupillage at the renowned Haresh Mahadevan & Co, gaining substantial exposure to both contentious and non-contentious work prior to her admission to the Malaysian Bar. Her areas of practice include Employment & Industrial Relation, Civil litigation and Dispute Resolution.",
   },
   {
@@ -169,7 +175,8 @@ export const partners = [
     portraitOrigin: "50% 50%",
     contactName: "Nur Qisdina",
     focus: "Real estate & insurance",
-    summary: "Advising on property transactions, financing arrangements and insurance-related disputes.",
+    summary:
+      "Advising on property transactions, financing arrangements and insurance-related disputes.",
     bio: "Nur Qisdina Batrisyia, a senior partner, focuses on real estate and insurance matters, advising clients on property transactions, financing arrangements, and insurance-related disputes with a practical and solutions-oriented approach. She completed her pupillage at Zaid Ibrahim & Co., where she gained valuable exposure to Civil litigation, conveyancing and insurance litigation before being admitted to the Malaysian Bar. Her practice is defined by meticulous attention to detail, strong commercial awareness, and a commitment to delivering clear, efficient, and results-oriented legal solutions.",
   },
 ];
@@ -257,8 +264,24 @@ export const emergencySteps = [
 ];
 
 export const proceedings = [
-  { step: "01", title: "Ex Parte Filing", body: "Certificate of Urgency, notice of application, supporting affidavit and draft order are filed at the registry." },
-  { step: "02", title: "Ex Parte Hearing", body: "The application is heard without notice to the respondents, and freezing or disclosure orders are sought." },
-  { step: "03", title: "Execution / Service", body: "The sealed order is served on the respondents, banks and exchanges, and compliance is supervised." },
-  { step: "04", title: "Inter Partes Return Date", body: "All parties return to court, where the order is continued, varied or discharged." },
+  {
+    step: "01",
+    title: "Ex Parte Filing",
+    body: "Certificate of Urgency, notice of application, supporting affidavit and draft order are filed at the registry.",
+  },
+  {
+    step: "02",
+    title: "Ex Parte Hearing",
+    body: "The application is heard without notice to the respondents, and freezing or disclosure orders are sought.",
+  },
+  {
+    step: "03",
+    title: "Execution / Service",
+    body: "The sealed order is served on the respondents, banks and exchanges, and compliance is supervised.",
+  },
+  {
+    step: "04",
+    title: "Inter Partes Return Date",
+    body: "All parties return to court, where the order is continued, varied or discharged.",
+  },
 ];
