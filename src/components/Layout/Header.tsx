@@ -2,7 +2,12 @@
 
 import { useEffect, useRef, useState } from "react";
 import { firm, nav, practiceAreas, sectors } from "@/data/site";
-import { ArrowUpRight, ChevronDown } from "@/components/Icons";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  ChevronDown,
+  User,
+} from "@/components/Icons";
 import { MobileMenu } from "@/components/Navigation/MobileMenu";
 import { BrandMark } from "@/components/Brand/BrandMark";
 import { Container } from "@/components/Layout/Container";
@@ -86,7 +91,7 @@ export function Header() {
         Skip to content
       </a>
       {/* Desktop-only info bar; on smaller screens the hotline lives in the menu. */}
-      <div className="hidden border-b border-line bg-mist text-[10px] text-slate xl:block">
+      <div className="hidden border-b border-line bg-mist text-[11px] text-slate xl:block">
         <Container className="flex min-h-9 items-center justify-between gap-4">
           <p className="hidden tracking-[0.04em] sm:block">
             Advocates &amp; Solicitors · Shah Alam, Malaysia
@@ -156,7 +161,7 @@ export function Header() {
                   >
                     {menu.label}
                     <ChevronDown
-                      className={`size-3 transition-transform ${activeMenu === menu.label ? "rotate-180" : ""}`}
+                      className={`size-3.5 text-slate transition-transform duration-200 ${activeMenu === menu.label ? "rotate-180" : ""}`}
                     />
                   </button>
                   <div
@@ -164,27 +169,34 @@ export function Header() {
                     className="nav-dropdown-panel"
                     hidden={activeMenu !== menu.label}
                   >
-                    <p className="mb-4 text-[9px] font-medium tracking-[0.16em] text-gold-ink uppercase">
+                    <p className="px-3 pt-2.5 pb-2 text-[10px] font-semibold tracking-[0.16em] text-gold-ink uppercase">
                       {menu.caption}
                     </p>
+                    <ul>
+                      {menu.items.map((item, index) => (
+                        <li key={item.id}>
+                          <a
+                            href={`#${item.id}`}
+                            onClick={closeNavigation}
+                            className="group flex items-start gap-3 rounded-lg px-3 py-2.5 text-[13.5px] leading-snug text-navy transition-colors hover:bg-mist"
+                          >
+                            <span className="mt-px w-5 shrink-0 text-[11px] leading-5 text-slate tabular-nums transition-colors group-hover:text-gold-ink">
+                              {String(index + 1).padStart(2, "0")}
+                            </span>
+                            <span className="flex-1">{item.title}</span>
+                            <ArrowRight className="mt-0.5 size-3.5 shrink-0 -translate-x-1 text-gold-ink opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100" />
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
                     <a
                       href={menu.href}
                       onClick={closeNavigation}
-                      className="mb-2 flex items-center justify-between border-b border-line pb-4 text-sm font-medium"
+                      className="mt-1.5 flex items-center justify-between border-t border-line px-3 pt-3.5 pb-2.5 text-[13px] font-medium text-navy transition-colors hover:text-gold-ink"
                     >
-                      Explore {menu.label.toLowerCase()}
-                      <ArrowUpRight className="size-4" />
+                      View all {menu.label.toLowerCase()}
+                      <ArrowUpRight className="size-3.5" />
                     </a>
-                    {menu.items.map((item) => (
-                      <a
-                        key={item.id}
-                        href={`#${item.id}`}
-                        onClick={closeNavigation}
-                        className="block py-3 text-xs leading-relaxed text-slate hover:text-gold-ink"
-                      >
-                        {item.title}
-                      </a>
-                    ))}
                   </div>
                 </li>
               ))}
@@ -207,6 +219,12 @@ export function Header() {
                 </a>
               </li>
             </ul>
+            <div className="header-sign-in">
+              <a href="/login" className="nav-link">
+                <User className="size-4" />
+                Sign in
+              </a>
+            </div>
           </nav>
           <button
             ref={mobileTrigger}

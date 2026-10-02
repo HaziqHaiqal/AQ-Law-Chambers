@@ -22,7 +22,7 @@ const items: Item[] = [
   { label: "Practice Areas", href: "#practice", children: practiceAreas },
   { label: "Sectors", href: "#sectors", children: sectors },
   { label: "Our Partners", href: "#partners" },
-  { label: "Testimonies", href: "#testimonials" },
+  { label: "Testimonials", href: "#testimonials" },
 ];
 
 /**
@@ -163,20 +163,29 @@ export function MobileMenu({
             className="menu-item mt-auto pt-5"
             style={{ "--i": items.length } as CSSProperties}
           >
-            <a
-              href="#contact"
-              onClick={close}
-              className="group flex min-h-12 items-center justify-between bg-gold px-5 text-[15px] font-medium text-navy transition-colors hover:bg-white"
-            >
-              Get in touch
-              <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
-            </a>
+            <div className="grid grid-cols-2 gap-3">
+              <a
+                href="#contact"
+                onClick={close}
+                className="group flex min-h-12 items-center justify-between border-t border-white/15 px-1 text-base font-medium text-white transition-colors hover:text-gold"
+              >
+                Get in touch
+                <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+              </a>
+              <a
+                href="/login"
+                className="group flex min-h-12 items-center justify-between border-t border-white/15 px-1 text-base font-medium text-gold transition-colors hover:text-white"
+              >
+                Sign in
+                <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+              </a>
+            </div>
             <a
               href={`tel:${firm.hotlineTel}`}
               className="mt-4 flex items-baseline justify-between gap-4 transition-colors hover:text-gold"
             >
               <span className="text-[11px] font-medium tracking-[0.16em] text-gold uppercase">
-                24/7 Ex Parte Hotline
+                24/7 Hotline
               </span>
               <span className="font-serif text-2xl leading-none">
                 {firm.hotline}
