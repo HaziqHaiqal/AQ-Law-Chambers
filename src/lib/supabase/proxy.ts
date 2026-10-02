@@ -1,6 +1,21 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
+const PROTECTED = [
+  "/portal",
+  "/admin",
+  "/account",
+  "/api/documents",
+  "/api/invoices",
+];
+const AUTH_PAGES = ["/login", "/signup"];
+
+function matches(path: string, prefixes: string[]) {
+  return prefixes.some(
+    (prefix) => path === prefix || path.startsWith(`${prefix}/`),
+  );
+}
+
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });
 
@@ -36,7 +51,26 @@ export async function updateSession(request: NextRequest) {
     },
   );
 
-  await supabase.auth.getClaims();
+  const { data } = await supabase.auth.getClaims();
+  const signedIn = Boolean(data?.claims);
+  const { pathname, search } = request.nextUrl;
 
-  return supabaseResponse;
+  let destination: URL | null = null;
+  if (!signedIn && matches(pathname, PROTECTED)) {
+    destination = new URL("/login", request.url);
+    destination.searchParams.set("next", `${pathname}${search}`);
+  } else if (signedIn && matches(pathname, AUTH_PAGES)) {
+    destination = new URL("/portal", request.url);
+  }
+
+  if (!destination) return supabaseResponse;
+
+  const redirect = NextResponse.redirect(destination);
+  supabaseResponse.cookies
+    .getAll()
+    .forEach((cookie) => redirect.cookies.set(cookie));
+  supabaseResponse.headers.forEach((value, key) => {
+    if (key.toLowerCase() === "cache-control") redirect.headers.set(key, value);
+  });
+  return redirect;
 }
