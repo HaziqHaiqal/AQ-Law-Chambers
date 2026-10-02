@@ -1,52 +1,52 @@
 import { firm } from "@/data/site";
-import { Clock, Mail, Phone, Printer } from "@/components/Icons";
+import { ArrowUpRight, Clock, Mail, MapPin, Phone } from "@/components/Icons";
 
-const details = [
-  {
-    icon: Mail,
-    label: "Email",
-    value: firm.email,
-    href: `mailto:${firm.email}`,
-  },
-  {
-    icon: Phone,
-    label: "Telephone",
-    value: firm.phone,
-    href: `tel:${firm.phoneTel}`,
-  },
-  { icon: Printer, label: "Fax", value: firm.fax },
-  {
-    icon: Clock,
-    label: "Office hours",
-    value: "Monday – Friday, 9:00am – 6:00pm",
-  },
-];
+const iconClass = "mt-0.5 size-[18px] shrink-0 text-gold-ink";
+const linkClass = "transition-colors hover:text-gold-ink";
 
 export function ContactDetails() {
   return (
-    <dl className="divide-y divide-line border-y border-line">
-      {details.map(({ icon: Icon, label, value, href }) => (
-        <div
-          key={label}
-          className="grid grid-cols-[18px_minmax(0,1fr)] gap-x-4 py-5"
+    <ul className="grid gap-5 text-[15px] leading-relaxed text-navy">
+      <li className="flex gap-4">
+        <Phone className={iconClass} />
+        <a href={`tel:${firm.phoneTel}`} className={linkClass}>
+          {firm.phone}
+        </a>
+      </li>
+      <li className="flex gap-4">
+        <Mail className={iconClass} />
+        <a
+          href={`mailto:${firm.email}`}
+          className={`min-w-0 break-words ${linkClass}`}
         >
-          <dt className="contents">
-            <Icon className="row-span-2 mt-0.5 size-[18px] text-gold-ink" />
-            <span className="text-xs font-medium tracking-[0.14em] text-slate uppercase">
-              {label}
-            </span>
-          </dt>
-          <dd className="col-start-2 mt-1 text-[15px] break-words">
-            {href ? (
-              <a href={href} className="transition-colors hover:text-gold-ink">
-                {value}
-              </a>
-            ) : (
-              value
-            )}
-          </dd>
+          {firm.email}
+        </a>
+      </li>
+      <li className="flex gap-4">
+        <MapPin className={iconClass} />
+        <div>
+          <address className="not-italic">
+            {/* Non-breaking hyphen keeps "Al-Farabi" together. */}
+            {firm.address.slice(0, -1).join(", ").replaceAll("-", "‑")}
+            <br />
+            {firm.address.at(-1)}
+          </address>
+          <a
+            href={firm.mapsUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="group mt-1.5 inline-flex items-center gap-1.5 text-sm font-medium text-gold-ink transition-colors hover:text-navy"
+          >
+            Get directions
+            <ArrowUpRight className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            <span className="sr-only"> (opens in a new tab)</span>
+          </a>
         </div>
-      ))}
-    </dl>
+      </li>
+      <li className="flex gap-4">
+        <Clock className={iconClass} />
+        Monday – Friday, 9:00am – 6:00pm
+      </li>
+    </ul>
   );
 }

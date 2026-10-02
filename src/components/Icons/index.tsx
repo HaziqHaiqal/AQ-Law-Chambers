@@ -63,13 +63,6 @@ export const Phone = (p: IconProps) => (
   </Base>
 );
 
-export const Printer = (p: IconProps) => (
-  <Base {...p}>
-    <path d="M7 9V3h10v6M7 17H5a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2" />
-    <path d="M7 14h10v7H7z" />
-  </Base>
-);
-
 export const Mail = (p: IconProps) => (
   <Base {...p}>
     <rect x="3" y="5" width="18" height="14" rx="1.5" />
