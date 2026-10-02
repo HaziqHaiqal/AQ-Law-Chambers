@@ -13,7 +13,7 @@ export function Testimonials() {
       <Container>
         <div className="grid gap-7 lg:grid-cols-2 lg:items-end lg:gap-20">
           <SectionHeading
-            eyebrow="Client testimonies"
+            eyebrow="Client testimonials"
             title="In our clients’ words."
           />
           <Reveal className="max-w-md text-base leading-[1.8] text-slate lg:pb-2">

@@ -83,7 +83,7 @@ export function Footer() {
               className="mt-5 inline-flex items-center gap-2.5 font-medium text-gold transition-colors hover:text-white"
             >
               <Phone className="size-4" />
-              24/7 Ex Parte Hotline · {firm.hotline}
+              24/7 Hotline · {firm.hotline}
             </a>
           </div>
         </div>
@@ -95,7 +95,7 @@ export function Footer() {
             Solicitors). All rights reserved.
           </p>
           <p>
-            The information on this website is for general purposes only and
+            The information on this website is for academic purposes only and
             does not constitute legal advice. No lawyer–client relationship is
             created by accessing this website or contacting the firm through it.
           </p>

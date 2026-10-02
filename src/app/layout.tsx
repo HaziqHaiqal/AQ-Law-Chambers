@@ -28,13 +28,14 @@ export const metadata: Metadata = {
     template: "%s | A&Q Law Chambers",
   },
   description:
-    "A&Q Law Chambers, Advocates & Solicitors in Shah Alam: civil litigation, mediation & arbitration, employment, insurance and real estate, with a 24/7 Ex Parte Injunction Hotline on 03-7954 5405.",
+    "A&Q Law Chambers, Advocates & Solicitors in Shah Alam: civil litigation, mediation & arbitration, employment, insurance and real estate, with a 24/7 Injunction Hotline on 03-7954 5405.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
+      data-scroll-behavior="smooth"
       className={`${inter.variable} ${sourceSerif.variable} ${cinzel.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col font-sans">{children}</body>
