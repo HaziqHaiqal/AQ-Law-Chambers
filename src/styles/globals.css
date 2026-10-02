@@ -353,6 +353,49 @@ summary::-webkit-details-marker {
   }
 }
 
+/* ---------- Client portal & partner dashboard ---------- */
+@layer components {
+  .field-input {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+    border: 1px solid var(--color-line);
+    border-radius: 8px;
+    background: white;
+    padding: 10px 14px;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--color-navy);
+    transition:
+      border-color 160ms,
+      box-shadow 160ms;
+  }
+  .field-input::placeholder {
+    color: #8a94a1;
+  }
+  .field-input:focus {
+    border-color: var(--color-navy);
+    outline: none;
+    box-shadow: 0 0 0 4px rgb(10 25 47 / 8%);
+  }
+  .field-input[aria-invalid="true"] {
+    border-color: #b4372c;
+  }
+  .field-input:disabled {
+    background: var(--color-mist);
+    color: var(--color-slate);
+  }
+  select.field-input {
+    padding-right: 36px;
+  }
+  @media (min-width: 640px) {
+    .field-input {
+      font-size: 14px;
+    }
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .ticker {
     overflow-x: auto;
