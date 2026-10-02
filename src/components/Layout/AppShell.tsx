@@ -64,9 +64,7 @@ export async function AppShell({ children }: { children: ReactNode }) {
     >
       <Phone className="size-[18px] shrink-0 text-gold" />
       <span>
-        <span className="block text-[11px] text-slate-light">
-          24/7 Injunction Hotline
-        </span>
+        <span className="block text-[11px] text-slate-light">24/7 Hotline</span>
         <span className="text-sm font-medium text-white">{firm.hotline}</span>
       </span>
     </a>

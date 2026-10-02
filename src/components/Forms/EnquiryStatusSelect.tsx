@@ -14,7 +14,7 @@ export function EnquiryStatusSelect({
 }) {
   const [pending, startTransition] = useTransition();
   return (
-    <label className="grid gap-1.5">
+    <label className="grid content-start gap-1.5">
       <span className="sr-only">Status</span>
       <select
         value={status}

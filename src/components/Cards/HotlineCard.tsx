@@ -10,7 +10,7 @@ export function HotlineCard() {
     >
       <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2">
         <p className="text-xs font-medium tracking-[0.16em] text-gold uppercase">
-          24/7 Injunction Hotline
+          24/7 Hotline
         </p>
         <HotlineStatus />
       </div>

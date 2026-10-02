@@ -10,8 +10,8 @@ export const firm = {
   phone: "03-503 3330",
   phoneTel: "+6035033330",
   fax: "03-7954 0405",
-  hotline: "03-7954 5405",
-  hotlineTel: "+60379545405",
+  hotline: "03-503 3330",
+  hotlineTel: "+6035033330",
   email: "aqlawchambers@gmail.com",
   hours: "Office: Mon – Fri, 9:00am – 6:00pm",
   mapsUrl:
@@ -146,7 +146,7 @@ export const overview = {
       label: "Core focus",
       value: "Emergency High Court relief & digital asset recovery",
     },
-    { label: "Availability", value: "24/7 Ex Parte Injunction Hotline" },
+    { label: "Availability", value: "24/7 Hotline" },
   ],
 };
 

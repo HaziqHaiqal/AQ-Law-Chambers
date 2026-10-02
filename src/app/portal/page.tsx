@@ -78,7 +78,7 @@ export default async function PortalHome() {
               Assets at risk right now?
             </span>
             <span className="block text-[13px] text-slate-light">
-              Call the 24/7 Injunction Hotline on {firm.hotline}
+              Call the 24/7 Hotline on {firm.hotline}
             </span>
           </span>
         </a>

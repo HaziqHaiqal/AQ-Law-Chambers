@@ -58,7 +58,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
             </span>
             <span>
               <span className="block text-xs text-slate-light">
-                Assets at risk? 24/7 Injunction Hotline
+                Assets at risk? 24/7 Hotline
               </span>
               <span className="text-[15px] font-medium">{firm.hotline}</span>
             </span>
