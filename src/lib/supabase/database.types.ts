@@ -393,45 +393,86 @@ export type Database = {
       };
       enquiries: {
         Row: {
+          case_id: number | null;
+          client_id: string | null;
+          contact_method: string | null;
+          contacted_at: string | null;
           created_at: string;
           email: string;
           full_name: string;
           handled_by: string | null;
           id: number;
+          invited_at: string | null;
+          invited_via: string | null;
           is_urgent: boolean;
           message: string;
+          outcome_at: string | null;
+          outcome_note: string | null;
           phone: string | null;
+          source: string;
           status: Database["public"]["Enums"]["enquiry_status"];
           topic: string | null;
           updated_at: string;
         };
         Insert: {
+          case_id?: number | null;
+          client_id?: string | null;
+          contact_method?: string | null;
+          contacted_at?: string | null;
           created_at?: string;
           email: string;
           full_name: string;
           handled_by?: string | null;
           id?: never;
+          invited_at?: string | null;
+          invited_via?: string | null;
           is_urgent?: boolean;
           message: string;
+          outcome_at?: string | null;
+          outcome_note?: string | null;
           phone?: string | null;
+          source?: string;
           status?: Database["public"]["Enums"]["enquiry_status"];
           topic?: string | null;
           updated_at?: string;
         };
         Update: {
+          case_id?: number | null;
+          client_id?: string | null;
+          contact_method?: string | null;
+          contacted_at?: string | null;
           created_at?: string;
           email?: string;
           full_name?: string;
           handled_by?: string | null;
           id?: never;
+          invited_at?: string | null;
+          invited_via?: string | null;
           is_urgent?: boolean;
           message?: string;
+          outcome_at?: string | null;
+          outcome_note?: string | null;
           phone?: string | null;
+          source?: string;
           status?: Database["public"]["Enums"]["enquiry_status"];
           topic?: string | null;
           updated_at?: string;
         };
         Relationships: [
+          {
+            foreignKeyName: "enquiries_case_id_fkey";
+            columns: ["case_id"];
+            isOneToOne: false;
+            referencedRelation: "cases";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "enquiries_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
           {
             foreignKeyName: "enquiries_handled_by_fkey";
             columns: ["handled_by"];
@@ -773,7 +814,13 @@ export type Database = {
         | "evidence"
         | "court_directives"
         | "internal";
-      enquiry_status: "new" | "contacted" | "converted" | "closed";
+      enquiry_status:
+        | "new"
+        | "contacted"
+        | "closed"
+        | "signed_up"
+        | "case_opened"
+        | "not_proceeding";
       invoice_status: "draft" | "issued" | "paid" | "void";
       milestone_stage:
         | "ex_parte_filing"
@@ -946,7 +993,14 @@ export const Constants = {
         "court_directives",
         "internal",
       ],
-      enquiry_status: ["new", "contacted", "converted", "closed"],
+      enquiry_status: [
+        "new",
+        "contacted",
+        "closed",
+        "signed_up",
+        "case_opened",
+        "not_proceeding",
+      ],
       invoice_status: ["draft", "issued", "paid", "void"],
       milestone_stage: [
         "ex_parte_filing",

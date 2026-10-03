@@ -3,6 +3,10 @@
 import { useTransition } from "react";
 import { addCaseMember, removeCaseMember } from "@/lib/actions/admin/cases";
 import { Button } from "@/components/Buttons/Button";
+import {
+  PortalInvite,
+  type PendingClient,
+} from "@/components/Cards/PortalInvite";
 import { formatDateTime, initials } from "@/lib/format";
 
 type ClientOption = {
@@ -16,20 +20,37 @@ export function ClientAccessList({
   caseId,
   linked,
   available,
+  pendingClients,
+  partnerName,
 }: {
   caseId: number;
   linked: (ClientOption & { last_sign_in_at: string | null })[];
   available: ClientOption[];
+  pendingClients: PendingClient[];
+  partnerName: string;
 }) {
   const [pending, startTransition] = useTransition();
 
   return (
     <div className="grid gap-4">
+      {pendingClients.length > 0 && (
+        <ul className="grid gap-4">
+          {pendingClients.map((client) => (
+            <PortalInvite
+              key={client.enquiryId}
+              client={client}
+              partnerName={partnerName}
+            />
+          ))}
+        </ul>
+      )}
       {linked.length === 0 ? (
-        <p className="rounded-lg bg-gold/15 px-4 py-3 text-[13px] leading-relaxed text-navy">
-          No client linked yet. The case stays hidden from clients until you
-          link one.
-        </p>
+        pendingClients.length === 0 && (
+          <p className="rounded-lg bg-gold/15 px-4 py-3 text-[13px] leading-relaxed text-navy">
+            No client linked yet. The case stays hidden from clients until you
+            link one.
+          </p>
+        )
       ) : (
         <ul className="grid gap-3">
           {linked.map((client) => (

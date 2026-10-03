@@ -13,7 +13,7 @@ export type AppNavItem = {
 
 export function appNav(
   role: Enums<"app_role">,
-  counts: { openTasks?: number; newEnquiries?: number } = {},
+  counts: { openTasks?: number; openEnquiries?: number } = {},
 ): AppNavItem[] {
   if (role === "client")
     return [
@@ -34,7 +34,7 @@ export function appNav(
       label: "Enquiries",
       href: "/admin/enquiries",
       icon: "enquiries",
-      badge: counts.newEnquiries,
+      badge: counts.openEnquiries,
     },
     { label: "Account", href: "/account", icon: "account" },
   ];

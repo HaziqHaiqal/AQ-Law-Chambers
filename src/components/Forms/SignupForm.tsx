@@ -11,8 +11,13 @@ import { SubmitButton } from "@/components/Forms/SubmitButton";
 import { TextField } from "@/components/Forms/TextField";
 import { Mail, Phone, User } from "@/components/Icons";
 
-export function SignupForm() {
+export function SignupForm({
+  defaults = {},
+}: {
+  defaults?: { full_name?: string; email?: string };
+}) {
   const [state, action] = useActionState<AuthFormState, FormData>(signUp, {});
+  const values = state.values ?? defaults;
 
   if (state.notice)
     return (
@@ -35,7 +40,7 @@ export function SignupForm() {
         required
         maxLength={100}
         placeholder="As it appears on your IC or passport"
-        defaultValue={state.values?.full_name}
+        defaultValue={values.full_name}
         error={state.fieldErrors?.full_name}
       />
       <div className="grid gap-4 sm:grid-cols-2">
@@ -48,7 +53,7 @@ export function SignupForm() {
           required
           maxLength={254}
           placeholder="you@example.com"
-          defaultValue={state.values?.email}
+          defaultValue={values.email}
           error={state.fieldErrors?.email}
         />
         <TextField

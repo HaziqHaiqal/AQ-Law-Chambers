@@ -13,6 +13,7 @@ export function NewCaseForm({
   clients,
   defaultClientId,
   defaultPartnerId,
+  fromEnquiry,
 }: {
   partners: { id: string; full_name: string }[];
   clients: {
@@ -23,25 +24,46 @@ export function NewCaseForm({
   }[];
   defaultClientId: string;
   defaultPartnerId: string;
+  fromEnquiry?: {
+    id: number;
+    full_name: string;
+    email: string;
+    client_id: string | null;
+  } | null;
 }) {
   const [state, action] = useActionState<FormState, FormData>(createCase, {});
 
   return (
     <form action={action} noValidate className="grid gap-5">
       <FormAlert>{state.error}</FormAlert>
-      <SelectField
-        label="Client"
-        name="client_id"
-        defaultValue={defaultClientId}
-        hint="Clients appear here once they've created a portal account."
-        options={[
-          { value: "", label: "Link a client later" },
-          ...clients.map((client) => ({
-            value: client.id,
-            label: `${client.organisation ?? client.full_name} · ${client.email}`,
-          })),
-        ]}
-      />
+      {fromEnquiry && (
+        <input type="hidden" name="enquiry_id" value={fromEnquiry.id} />
+      )}
+      {fromEnquiry && !fromEnquiry.client_id ? (
+        <div className="grid gap-1 rounded-lg bg-mist px-4 py-3 text-[13px] leading-relaxed">
+          <p className="font-medium text-navy">
+            Client: {fromEnquiry.full_name} · {fromEnquiry.email}
+          </p>
+          <p className="text-slate">
+            No account yet. You can create the case now; if they sign up later
+            with this email, it will link automatically.
+          </p>
+        </div>
+      ) : (
+        <SelectField
+          label="Client"
+          name="client_id"
+          defaultValue={defaultClientId}
+          hint="Clients appear here once they've created an account."
+          options={[
+            { value: "", label: "Link a client later" },
+            ...clients.map((client) => ({
+              value: client.id,
+              label: `${client.organisation ?? client.full_name} · ${client.email}`,
+            })),
+          ]}
+        />
+      )}
       <CaseFields
         values={{
           title: null,

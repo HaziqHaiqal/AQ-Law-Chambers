@@ -57,6 +57,7 @@ export async function createCase(
   await requireRole("admin");
   const { fieldErrors, values } = readCaseFields(formData);
   const clientId = field(formData, "client_id");
+  const enquiryId = Number(field(formData, "enquiry_id"));
   if (Object.keys(fieldErrors).length)
     return { error: "Please fix the highlighted fields.", fieldErrors };
 
@@ -78,6 +79,13 @@ export async function createCase(
         error:
           "The case was created, but the client couldn't be linked. Link them from the case page.",
       };
+  }
+
+  if (enquiryId) {
+    await supabase
+      .from("enquiries")
+      .update({ case_id: created.id })
+      .eq("id", enquiryId);
   }
 
   revalidateCase(created.id);

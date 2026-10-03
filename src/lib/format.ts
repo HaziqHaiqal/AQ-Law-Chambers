@@ -103,6 +103,24 @@ export function formatMoney(amount: number, currency = "MYR") {
   );
 }
 
+/** WhatsApp chat link; local Malaysian numbers (012-…) get the 60 country code. */
+export function whatsappLink(phone: string, text: string) {
+  const digits = phone.replace(/\D/g, "");
+  const number = digits.startsWith("0") ? `6${digits}` : digits;
+  return `https://wa.me/${number}?text=${encodeURIComponent(text)}`;
+}
+
+export function telLink(phone: string) {
+  return `tel:${phone.replace(/[^\d+]/g, "")}`;
+}
+
+export function mailtoLink(email: string, subject: string, body: string) {
+  const query = new URLSearchParams({ subject, body })
+    .toString()
+    .replaceAll("+", "%20");
+  return `mailto:${email}?${query}`;
+}
+
 export const documentCategoryLabels: Record<
   Enums<"document_category">,
   string
@@ -166,18 +184,18 @@ export const updateCategoryLabels: Record<Enums<"update_category">, string> = {
   general: "General",
 };
 
+/** Enquiries waiting on a partner: not contacted yet, or no case opened or closed. */
+export const openEnquiryStatuses = [
+  "new",
+  "contacted",
+  "signed_up",
+] satisfies Enums<"enquiry_status">[];
+
 export const invoiceStatusLabels: Record<Enums<"invoice_status">, string> = {
   draft: "Draft",
   issued: "Issued",
   paid: "Paid",
   void: "Void",
-};
-
-export const enquiryStatusLabels: Record<Enums<"enquiry_status">, string> = {
-  new: "New",
-  contacted: "Contacted",
-  converted: "Converted to client",
-  closed: "Closed",
 };
 
 export type MilestoneState = "done" | "in_progress" | "upcoming";

@@ -8,7 +8,7 @@ import { MobileAppMenu } from "@/components/Navigation/MobileAppMenu";
 import { NotificationBell } from "@/components/Navigation/NotificationBell";
 import { firm } from "@/data/site";
 import { getCurrentProfile } from "@/lib/auth";
-import { formatLongDate, initials } from "@/lib/format";
+import { formatLongDate, initials, openEnquiryStatuses } from "@/lib/format";
 import { appNav } from "@/lib/navigation";
 import { getNotifications } from "@/lib/queries";
 import { createClient } from "@/lib/supabase/server";
@@ -19,7 +19,7 @@ export async function AppShell({ children }: { children: ReactNode }) {
 
   const supabase = await createClient();
   const isPartner = profile.role === "admin";
-  const [notifications, openTasks, newEnquiries] = await Promise.all([
+  const [notifications, openTasks, openEnquiries] = await Promise.all([
     getNotifications(supabase),
     isPartner
       ? supabase
@@ -33,11 +33,11 @@ export async function AppShell({ children }: { children: ReactNode }) {
       ? supabase
           .from("enquiries")
           .select("id", { count: "exact", head: true })
-          .eq("status", "new")
+          .in("status", openEnquiryStatuses)
           .then(({ count }) => count ?? 0)
       : 0,
   ]);
-  const nav = appNav(profile.role, { openTasks, newEnquiries });
+  const nav = appNav(profile.role, { openTasks, openEnquiries });
   const home = nav[0].href;
 
   const userBlock = (

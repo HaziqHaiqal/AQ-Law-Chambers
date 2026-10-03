@@ -28,6 +28,7 @@ import {
 } from "@/lib/format";
 import { getThreads } from "@/lib/queries";
 import { createClient } from "@/lib/supabase/server";
+import { signUpLink, siteOrigin } from "@/lib/url";
 
 export const metadata: Metadata = { title: "Client Workspace" };
 
@@ -57,6 +58,8 @@ export default async function CaseWorkspace({
     { data: people },
     { data: downloads },
     { count: invoiceCount },
+    { data: pendingEnquiries },
+    origin,
   ] = await Promise.all([
     supabase.from("case_overview").select("*").eq("id", caseId).maybeSingle(),
     supabase.from("cases").select("*").eq("id", caseId).maybeSingle(),
@@ -108,6 +111,13 @@ export default async function CaseWorkspace({
       .eq("action", "document_downloaded")
       .order("created_at", { ascending: false }),
     supabase.from("invoices").select("id", { count: "exact", head: true }),
+    supabase
+      .from("enquiries")
+      .select("id, full_name, email, phone, invited_at, invited_via")
+      .eq("case_id", caseId)
+      .is("client_id", null)
+      .order("created_at"),
+    siteOrigin(),
   ]);
 
   if (!overview || !caseRecord) notFound();
@@ -342,6 +352,20 @@ export default async function CaseWorkspace({
                 caseId={caseId}
                 linked={linked}
                 available={clients.filter((c) => !memberIds.has(c.id))}
+                partnerName={profile.full_name}
+                pendingClients={(pendingEnquiries ?? []).map((enquiry) => ({
+                  enquiryId: enquiry.id,
+                  name: enquiry.full_name,
+                  email: enquiry.email,
+                  phone: enquiry.phone,
+                  invitedAt: enquiry.invited_at,
+                  invitedVia: enquiry.invited_via,
+                  signUpLink: signUpLink(
+                    origin,
+                    enquiry.email,
+                    enquiry.full_name,
+                  ),
+                }))}
               />
             </SectionCard>
             <SectionCard
