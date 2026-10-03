@@ -28,7 +28,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
 
         <div className="my-auto max-w-md py-10">
           <p className="text-[13px] font-medium text-gold">
-            Secure Client Portal
+            Secure client account
           </p>
           <h2 className="mt-4 font-serif text-[2.4rem] leading-[1.15] tracking-[-0.02em] text-balance">
             Your emergency application, step by step.

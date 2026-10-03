@@ -44,8 +44,7 @@ export default async function ClientsPage() {
   return (
     <>
       <PageHeading eyebrow="Firm management" title="Clients">
-        Everyone with a portal account, their cases and when they last logged
-        in.
+        Clients with an account, their cases and when they last logged in.
       </PageHeading>
       <SectionCard title={`${clients?.length ?? 0} client accounts`} flush>
         {!clients?.length ? (

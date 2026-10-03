@@ -333,7 +333,7 @@ export default async function CaseWorkspace({
       {tab === "billing" && (
         <SectionCard
           title="Invoices"
-          description="Drafts are internal. Issued invoices appear in the client's portal."
+          description="Drafts are internal. Issued invoices are visible to the client."
           flush
         >
           <div className="border-t border-line">

@@ -97,7 +97,7 @@ export async function AppShell({ children }: { children: ReactNode }) {
           <BrandMark light />
         </Link>
         <p className="mb-8 px-3 text-xs text-slate-light">
-          {isPartner ? "Admin Portal" : "Client Portal"}
+          {isPartner ? "Firm workspace" : "Client account"}
         </p>
         <nav aria-label="Main" className="flex-1">
           <AppNav items={nav} />

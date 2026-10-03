@@ -381,7 +381,7 @@ summary::-webkit-details-marker {
   }
 }
 
-/* ---------- Client portal & partner dashboard ---------- */
+/* ---------- Client account & partner dashboard ---------- */
 @layer components {
   .field-input {
     display: block;
