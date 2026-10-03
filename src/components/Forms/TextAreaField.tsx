@@ -17,7 +17,7 @@ export function TextAreaField({
 }) {
   const errorId = `${name}-error`;
   return (
-    <label className={`grid content-start gap-1.5 ${className}`}>
+    <label className={`grid grid-cols-1 content-start gap-1.5 ${className}`}>
       <FieldLabel required={textarea.required} optional={optional}>
         {label}
       </FieldLabel>

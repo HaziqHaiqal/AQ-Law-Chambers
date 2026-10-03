@@ -22,7 +22,7 @@ export function TextField({
   const errorId = `${name}-error`;
   const hintId = `${name}-hint`;
   return (
-    <label className={`grid content-start gap-1.5 ${className}`}>
+    <label className={`grid grid-cols-1 content-start gap-1.5 ${className}`}>
       <FieldLabel required={input.required} optional={optional}>
         {label}
       </FieldLabel>
