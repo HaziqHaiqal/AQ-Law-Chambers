@@ -134,3 +134,19 @@ export async function removeCaseMember(caseId: number, clientId: string) {
     .eq("client_id", clientId);
   revalidateCase(caseId);
 }
+
+export async function setCaseClosed(caseId: number, closed: boolean) {
+  await requireRole("admin");
+  const supabase = await createClient();
+  let status: Enums<"case_status"> = "closed";
+  if (!closed) {
+    const { data } = await supabase
+      .from("cases")
+      .select("title, status_before_close")
+      .eq("id", caseId)
+      .single();
+    status = data?.status_before_close ?? (data?.title ? "active" : "intake");
+  }
+  await supabase.from("cases").update({ status }).eq("id", caseId);
+  revalidateCase(caseId);
+}

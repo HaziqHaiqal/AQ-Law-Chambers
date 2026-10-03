@@ -90,6 +90,22 @@ export const Menu = (p: IconProps) => (
   </Base>
 );
 
+export const CircleCheck = (p: IconProps) => (
+  <Base {...p}>
+    <circle cx="12" cy="12" r="9" />
+    <path d="m8.5 12.5 2.5 2.5 4.5-5" />
+  </Base>
+);
+
+export const Grid = (p: IconProps) => (
+  <Base {...p}>
+    <rect x="4" y="4" width="6.5" height="6.5" rx="1.5" />
+    <rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5" />
+    <rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5" />
+    <rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5" />
+  </Base>
+);
+
 export const Close = (p: IconProps) => (
   <Base {...p}>
     <path d="M6 6l12 12M18 6 6 18" />

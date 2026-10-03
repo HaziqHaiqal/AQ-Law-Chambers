@@ -231,6 +231,8 @@ export type Database = {
           opened_at: string;
           relief_types: Database["public"]["Enums"]["relief_type"][];
           status: Database["public"]["Enums"]["case_status"];
+          status_before_close:
+            Database["public"]["Enums"]["case_status"] | null;
           summary: string | null;
           title: string | null;
           updated_at: string;
@@ -245,6 +247,8 @@ export type Database = {
           opened_at?: string;
           relief_types?: Database["public"]["Enums"]["relief_type"][];
           status?: Database["public"]["Enums"]["case_status"];
+          status_before_close?:
+            Database["public"]["Enums"]["case_status"] | null;
           summary?: string | null;
           title?: string | null;
           updated_at?: string;
@@ -259,6 +263,8 @@ export type Database = {
           opened_at?: string;
           relief_types?: Database["public"]["Enums"]["relief_type"][];
           status?: Database["public"]["Enums"]["case_status"];
+          status_before_close?:
+            Database["public"]["Enums"]["case_status"] | null;
           summary?: string | null;
           title?: string | null;
           updated_at?: string;

@@ -1,14 +1,21 @@
 import type { Enums } from "@/lib/supabase/database.types";
 
 export type AppNavIcon =
-  "cases" | "tasks" | "clients" | "enquiries" | "account";
+  | "dashboard"
+  | "cases"
+  | "tasks"
+  | "clients"
+  | "enquiries"
+  | "account";
 
 export type AppNavItem = {
   label: string;
   href: string;
   icon: AppNavIcon;
   badge?: number;
+  /** Highlight only on this exact path, plus any path under `alsoUnder`. */
   exact?: boolean;
+  alsoUnder?: string;
 };
 
 export function appNav(
@@ -22,7 +29,8 @@ export function appNav(
     ];
 
   return [
-    { label: "Dashboard", href: "/admin", icon: "cases", exact: true },
+    { label: "Dashboard", href: "/admin", icon: "dashboard", exact: true },
+    { label: "Cases", href: "/admin/cases", icon: "cases" },
     {
       label: "Tasks",
       href: "/admin/tasks",

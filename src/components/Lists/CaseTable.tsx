@@ -13,14 +13,14 @@ import type { Tables } from "@/lib/supabase/database.types";
 export function CaseTable({
   cases,
   partnerNames,
+  emptyText = "Open one with “New case”.",
 }: {
   cases: Tables<"case_overview">[];
   partnerNames: Record<string, string>;
+  emptyText?: string;
 }) {
   if (cases.length === 0)
-    return (
-      <EmptyState title="No cases yet">Open one with “New case”.</EmptyState>
-    );
+    return <EmptyState title="No cases here">{emptyText}</EmptyState>;
 
   return (
     <div className="overflow-x-auto">

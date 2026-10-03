@@ -120,7 +120,7 @@ export default async function ClientsPage() {
                             ))}
                           </ul>
                         ) : (
-                          <Link href={`/admin?new-case=${client.id}`}>
+                          <Link href={`/admin/cases?new-case=${client.id}`}>
                             <StatusBadge tone="pending">
                               Pending intake · Create case
                             </StatusBadge>

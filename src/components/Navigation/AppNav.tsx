@@ -2,11 +2,19 @@
 
 import Link, { useLinkStatus } from "next/link";
 import { usePathname } from "next/navigation";
-import { Briefcase, Inbox, ListChecks, User, Users } from "@/components/Icons";
+import {
+  Briefcase,
+  Grid,
+  Inbox,
+  ListChecks,
+  User,
+  Users,
+} from "@/components/Icons";
 import { Spinner } from "@/components/Status/Spinner";
 import type { AppNavIcon, AppNavItem } from "@/lib/navigation";
 
 const icons: Record<AppNavIcon, typeof Briefcase> = {
+  dashboard: Grid,
   cases: Briefcase,
   tasks: ListChecks,
   clients: Users,
@@ -37,9 +45,10 @@ export function AppNav({
     <ul className="grid gap-1">
       {items.map((item) => {
         const Icon = icons[item.icon];
-        const active = item.exact
-          ? pathname === item.href || pathname.startsWith(`${item.href}/cases`)
-          : pathname === item.href || pathname.startsWith(`${item.href}/`);
+        const under = item.exact ? item.alsoUnder : `${item.href}/`;
+        const active =
+          pathname === item.href ||
+          (under !== undefined && pathname.startsWith(under));
         return (
           <li key={item.href}>
             <Link

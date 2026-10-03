@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { CaseStatusButton } from "@/components/Buttons/CaseStatusButton";
 import { NewInvoiceButton } from "@/components/Buttons/NewInvoiceButton";
 import { SectionCard } from "@/components/Cards/SectionCard";
 import { CaseDetailsForm } from "@/components/Forms/CaseDetailsForm";
@@ -17,12 +18,14 @@ import { MilestoneChecklist } from "@/components/Lists/MilestoneChecklist";
 import { TaskList } from "@/components/Lists/TaskList";
 import { Tabs } from "@/components/Navigation/Tabs";
 import { LiveIndicator } from "@/components/Status/LiveIndicator";
+import { CircleCheck } from "@/components/Icons";
 import { StatusBadge, caseStatusTone } from "@/components/Status/StatusBadge";
 import { PageHeading } from "@/components/Typography/PageHeading";
 import { requireRole } from "@/lib/auth";
 import {
   caseStatusLabel,
   caseTitle,
+  formatDate,
   formatDateTime,
   reliefTypeLabels,
 } from "@/lib/format";
@@ -145,6 +148,7 @@ export default async function CaseWorkspace({
   }
 
   const status = caseStatusLabel(overview);
+  const closed = caseRecord.status === "closed";
   const href = (next: Tab) =>
     `/admin/cases/${caseId}${next === "documents" ? "" : `?tab=${next}`}`;
   const lastLogin = linked
@@ -171,18 +175,27 @@ export default async function CaseWorkspace({
   return (
     <>
       <PageHeading
-        back={{ href: "/admin", label: "Dashboard" }}
+        back={{ href: "/admin/cases", label: "Cases" }}
         eyebrow="Client Workspace"
         title={caseTitle(overview.title)}
         actions={
-          <LiveIndicator
-            channel={`admin-case-${caseId}`}
-            subscriptions={[
-              { table: "document_comments" },
-              { table: "documents", filter: `case_id=eq.${caseId}` },
-              { table: "case_milestones", filter: `case_id=eq.${caseId}` },
-            ]}
-          />
+          <div className="flex items-center gap-3">
+            <LiveIndicator
+              channel={`admin-case-${caseId}`}
+              subscriptions={[
+                { table: "document_comments" },
+                { table: "documents", filter: `case_id=eq.${caseId}` },
+                { table: "case_milestones", filter: `case_id=eq.${caseId}` },
+              ]}
+            />
+            {!closed && (
+              <CaseStatusButton
+                caseId={caseId}
+                caseTitle={caseTitle(overview.title)}
+                closed={false}
+              />
+            )}
+          </div>
         }
       >
         <div className="flex flex-wrap items-center gap-2">
@@ -195,6 +208,27 @@ export default async function CaseWorkspace({
           )}
         </div>
       </PageHeading>
+
+      {closed && (
+        <div className="mb-6 flex flex-wrap items-center justify-between gap-4 rounded-xl border border-line bg-mist px-5 py-4">
+          <div className="flex items-center gap-3">
+            <CircleCheck className="size-6 shrink-0 text-gold-ink" />
+            <div>
+              <p className="text-sm font-medium">This case is closed</p>
+              <p className="text-[13px] text-slate">
+                Closed on{" "}
+                {caseRecord.closed_at && formatDate(caseRecord.closed_at)}. The
+                client can still see it in their account.
+              </p>
+            </div>
+          </div>
+          <CaseStatusButton
+            caseId={caseId}
+            caseTitle={caseTitle(overview.title)}
+            closed
+          />
+        </div>
+      )}
 
       <dl className="mb-6 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-line bg-line lg:grid-cols-4">
         {facts.map((fact) => (
