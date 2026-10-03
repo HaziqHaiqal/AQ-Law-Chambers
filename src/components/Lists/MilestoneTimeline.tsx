@@ -1,12 +1,12 @@
 import { Check } from "@/components/Icons";
 import {
+  clientMilestoneLabels,
   formatDateTime,
-  milestoneLabels,
   milestoneOrder,
   milestoneState,
   type MilestoneState,
 } from "@/lib/format";
-import type { Tables } from "@/lib/supabase/database.types";
+import type { Enums, Tables } from "@/lib/supabase/database.types";
 
 type Milestone = Pick<
   Tables<"case_milestones">,
@@ -19,7 +19,13 @@ const stateLabel: Record<MilestoneState, string> = {
   upcoming: "Upcoming",
 };
 
-export function MilestoneTimeline({ milestones }: { milestones: Milestone[] }) {
+export function MilestoneTimeline({
+  milestones,
+  nextStage,
+}: {
+  milestones: Milestone[];
+  nextStage?: Enums<"milestone_stage"> | null;
+}) {
   const byStage = new Map(milestones.map((m) => [m.stage, m]));
   const states = milestoneOrder.map((stage) => {
     const milestone = byStage.get(stage);
@@ -31,12 +37,17 @@ export function MilestoneTimeline({ milestones }: { milestones: Milestone[] }) {
       {milestoneOrder.map((stage, index) => {
         const milestone = byStage.get(stage);
         const state = states[index];
+        const isNext = stage === nextStage && state !== "done";
+        const isCurrent =
+          isNext || (nextStage == null && state === "in_progress");
         const nextDone =
-          states[index + 1] === "done" || states[index + 1] === "in_progress";
+          states[index + 1] === "done" ||
+          states[index + 1] === "in_progress" ||
+          milestoneOrder[index + 1] === nextStage;
         return (
           <li
             key={stage}
-            aria-current={state === "in_progress" ? "step" : undefined}
+            aria-current={isCurrent ? "step" : undefined}
             className="relative flex gap-4 pb-8 last:pb-0 md:block md:pr-6 md:pb-0"
           >
             {index < 3 && (
@@ -51,7 +62,7 @@ export function MilestoneTimeline({ milestones }: { milestones: Milestone[] }) {
               className={`relative z-10 grid size-10 shrink-0 place-items-center rounded-full text-sm font-semibold ${
                 state === "done"
                   ? "bg-gold text-navy"
-                  : state === "in_progress"
+                  : isCurrent
                     ? "bg-navy text-white ring-4 ring-navy/10"
                     : "border-2 border-line bg-white text-slate"
               }`}
@@ -64,19 +75,27 @@ export function MilestoneTimeline({ milestones }: { milestones: Milestone[] }) {
             </span>
             <div className="min-w-0 md:mt-4">
               <p
-                className={`text-xs font-medium ${state === "done" ? "text-gold-ink" : state === "in_progress" ? "text-navy" : "text-slate"}`}
+                className={`text-xs font-medium ${state === "done" ? "text-gold-ink" : isCurrent ? "text-navy" : "text-slate"}`}
               >
-                {stateLabel[state]}
+                {state === "done"
+                  ? stateLabel.done
+                  : isNext
+                    ? "Next step"
+                    : stateLabel[state]}
               </p>
               <p className="mt-0.5 text-[15px] leading-snug font-semibold">
-                {milestoneLabels[stage]}
+                {clientMilestoneLabels[stage]}
               </p>
               <p className="mt-1 text-[13px] text-slate">
                 {milestone?.completed_at
                   ? formatDateTime(milestone.completed_at)
                   : milestone?.scheduled_for
                     ? `Scheduled ${formatDateTime(milestone.scheduled_for)}`
-                    : "Date to be confirmed"}
+                    : isNext
+                      ? "Date to be confirmed"
+                      : index === 0
+                        ? "Not scheduled yet"
+                        : "Follows earlier stages"}
               </p>
               {milestone?.note && (
                 <p className="mt-2 text-[13px] leading-relaxed text-navy">

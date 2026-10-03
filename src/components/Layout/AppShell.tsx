@@ -19,25 +19,37 @@ export async function AppShell({ children }: { children: ReactNode }) {
 
   const supabase = await createClient();
   const isPartner = profile.role === "admin";
-  const [notifications, openTasks, openEnquiries] = await Promise.all([
-    getNotifications(supabase),
-    isPartner
-      ? supabase
-          .from("tasks")
-          .select("id", { count: "exact", head: true })
-          .eq("assigned_to", profile.id)
-          .neq("status", "done")
-          .then(({ count }) => count ?? 0)
-      : 0,
-    isPartner
-      ? supabase
-          .from("enquiries")
-          .select("id", { count: "exact", head: true })
-          .in("status", openEnquiryStatuses)
-          .then(({ count }) => count ?? 0)
-      : 0,
-  ]);
-  const nav = appNav(profile.role, { openTasks, openEnquiries });
+  const [notifications, openTasks, openEnquiries, unpaidInvoices] =
+    await Promise.all([
+      getNotifications(supabase),
+      isPartner
+        ? supabase
+            .from("tasks")
+            .select("id", { count: "exact", head: true })
+            .eq("assigned_to", profile.id)
+            .neq("status", "done")
+            .then(({ count }) => count ?? 0)
+        : 0,
+      isPartner
+        ? supabase
+            .from("enquiries")
+            .select("id", { count: "exact", head: true })
+            .in("status", openEnquiryStatuses)
+            .then(({ count }) => count ?? 0)
+        : 0,
+      isPartner
+        ? 0
+        : supabase
+            .from("invoices")
+            .select("id", { count: "exact", head: true })
+            .eq("status", "issued")
+            .then(({ count }) => count ?? 0),
+    ]);
+  const nav = appNav(profile.role, {
+    openTasks,
+    openEnquiries,
+    unpaidInvoices,
+  });
   const home = nav[0].href;
 
   const userBlock = (
@@ -117,7 +129,18 @@ export async function AppShell({ children }: { children: ReactNode }) {
               {formatLongDate(new Date())}
             </p>
           </div>
-          <NotificationBell userId={profile.id} initial={notifications} />
+          <div className="flex items-center gap-1.5">
+            {!isPartner && (
+              <a
+                href={`tel:${firm.hotlineTel}`}
+                aria-label={`Call the 24/7 Hotline at ${firm.hotline}`}
+                className="grid size-10 place-items-center rounded-lg text-gold-ink transition-colors hover:bg-mist lg:hidden"
+              >
+                <Phone className="size-5" />
+              </a>
+            )}
+            <NotificationBell userId={profile.id} initial={notifications} />
+          </div>
         </header>
         <main
           id="main-content"

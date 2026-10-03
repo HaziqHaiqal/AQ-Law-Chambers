@@ -35,7 +35,7 @@ export function StatusBadge({
 }
 
 export function caseStatusTone(label: string): BadgeTone {
-  if (label.startsWith("Pending")) return "pending";
+  if (label.startsWith("Pending") || label === "Being set up") return "pending";
   if (label === "Closed") return "muted";
   return "active";
 }

@@ -1,12 +1,15 @@
 "use client";
 
 import Link, { useLinkStatus } from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import {
   Briefcase,
+  Clock,
+  FileText,
   Grid,
   Inbox,
   ListChecks,
+  Receipt,
   User,
   Users,
 } from "@/components/Icons";
@@ -16,6 +19,9 @@ import type { AppNavIcon, AppNavItem } from "@/lib/navigation";
 const icons: Record<AppNavIcon, typeof Briefcase> = {
   dashboard: Grid,
   cases: Briefcase,
+  documents: FileText,
+  actionLog: Clock,
+  invoices: Receipt,
   tasks: ListChecks,
   clients: Users,
   enquiries: Inbox,
@@ -41,6 +47,8 @@ export function AppNav({
   onNavigate?: () => void;
 }) {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const selectedCase = searchParams.get("case");
   return (
     <ul className="grid gap-1">
       {items.map((item) => {
@@ -49,10 +57,20 @@ export function AppNav({
         const active =
           pathname === item.href ||
           (under !== undefined && pathname.startsWith(under));
+        const preserveCase =
+          selectedCase &&
+          [
+            "/portal/documents",
+            "/portal/action-log",
+            "/portal/invoices",
+          ].includes(item.href);
+        const href = preserveCase
+          ? `${item.href}?case=${encodeURIComponent(selectedCase)}`
+          : item.href;
         return (
           <li key={item.href}>
             <Link
-              href={item.href}
+              href={href}
               onClick={onNavigate}
               aria-current={active ? "page" : undefined}
               className={`relative flex min-h-11 items-center gap-3 rounded-lg px-3 text-sm transition-colors ${

@@ -9,7 +9,7 @@ import { field } from "@/lib/validation/forms";
 export type CommentFormState = { error?: string; sentAt?: number };
 
 function revalidateCase(caseId: number) {
-  revalidatePath(`/portal/cases/${caseId}`);
+  revalidatePath("/portal", "layout");
   revalidatePath(`/admin/cases/${caseId}`);
 }
 

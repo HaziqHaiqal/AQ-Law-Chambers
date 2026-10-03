@@ -285,3 +285,11 @@ export const proceedings = [
     body: "All parties return to court, where the order is continued, varied or discharged.",
   },
 ];
+
+export const enquiryTopics = [
+  ...[...practiceAreas, ...sectors].map((item) => ({
+    value: item.title,
+    label: item.short,
+  })),
+  { value: "General enquiry", label: "Something else" },
+];

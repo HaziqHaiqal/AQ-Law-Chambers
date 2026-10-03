@@ -21,8 +21,8 @@ export function asEnum<T extends EnumName>(
 
 export function revalidateCase(caseId: number) {
   revalidatePath(`/admin/cases/${caseId}`);
-  revalidatePath(`/portal/cases/${caseId}`);
-  revalidatePath("/admin");
+  revalidatePath("/portal", "layout");
+  revalidatePath("/admin", "layout");
 }
 
 export const MAX_FILE_BYTES = 50 * 1024 * 1024;

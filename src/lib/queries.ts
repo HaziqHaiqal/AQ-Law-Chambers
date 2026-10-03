@@ -28,3 +28,26 @@ export async function getThreads(supabase: Supabase, documentIds: number[]) {
   }
   return threads;
 }
+
+/** The signed-in client's cases, newest first. */
+export async function getClientCases(supabase: Supabase) {
+  const { data } = await supabase
+    .from("case_overview")
+    .select("id, title")
+    .order("opened_at", { ascending: false });
+  return (data ?? []).flatMap((c) =>
+    c.id === null ? [] : [{ id: c.id, title: c.title }],
+  );
+}
+
+/** Resolve an optional case query parameter against cases visible to this client. */
+export function getSelectedClientCase<T extends { id: number }>(
+  cases: T[],
+  value: string | string[] | undefined,
+) {
+  if (value === undefined) return null;
+  if (Array.isArray(value) || !/^\d+$/.test(value)) return undefined;
+  const id = Number(value);
+  if (!Number.isSafeInteger(id)) return undefined;
+  return cases.find((item) => item.id === id);
+}

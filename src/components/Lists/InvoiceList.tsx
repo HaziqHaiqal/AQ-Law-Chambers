@@ -2,7 +2,12 @@ import type { ReactNode } from "react";
 import { Download } from "@/components/Icons";
 import { EmptyState } from "@/components/Status/EmptyState";
 import { StatusBadge, type BadgeTone } from "@/components/Status/StatusBadge";
-import { formatDate, formatMoney, invoiceStatusLabels } from "@/lib/format";
+import {
+  formatDate,
+  formatMoney,
+  invoiceStatusLabels,
+  portalToday,
+} from "@/lib/format";
 import type { Tables } from "@/lib/supabase/database.types";
 
 export type ListInvoice = Pick<
@@ -18,7 +23,7 @@ export type ListInvoice = Pick<
   | "status"
   | "paid_at"
   | "file_path"
->;
+> & { caseTitle?: string };
 
 const tone: Record<ListInvoice["status"], BadgeTone> = {
   draft: "muted",
@@ -30,14 +35,15 @@ const tone: Record<ListInvoice["status"], BadgeTone> = {
 export function InvoiceList({
   invoices,
   renderActions,
-  emptyText = "No invoices have been issued for this case.",
+  emptyText = "When the firm issues a bill, you’ll find its amount, due date and PDF here.",
 }: {
   invoices: ListInvoice[];
   renderActions?: (invoice: ListInvoice) => ReactNode;
   emptyText?: string;
 }) {
-  if (invoices.length === 0) return <EmptyState>{emptyText}</EmptyState>;
-  const today = new Date().toISOString().slice(0, 10);
+  if (invoices.length === 0)
+    return <EmptyState title="No invoices yet">{emptyText}</EmptyState>;
+  const today = portalToday();
 
   return (
     <ul className="divide-y divide-line">
@@ -62,6 +68,7 @@ export function InvoiceList({
                 {invoice.description}
               </p>
               <p className="mt-0.5 text-xs text-slate">
+                {invoice.caseTitle && `${invoice.caseTitle} · `}
                 {invoice.issued_on
                   ? `Issued ${formatDate(invoice.issued_on)}`
                   : "Draft"}
@@ -70,11 +77,14 @@ export function InvoiceList({
               </p>
             </div>
             <div className="text-right">
+              <p className="text-xs text-slate">
+                {invoice.status === "issued" ? "Amount due" : "Invoice total"}
+              </p>
               <p className="text-lg font-semibold tabular-nums">
                 {formatMoney(Number(invoice.total), invoice.currency)}
               </p>
               <p className="text-xs text-slate">
-                incl. SST{" "}
+                Includes SST{" "}
                 {formatMoney(Number(invoice.tax_amount), invoice.currency)}
               </p>
             </div>
@@ -82,14 +92,11 @@ export function InvoiceList({
               {invoice.file_path && (
                 <a
                   href={`/api/invoices/${invoice.id}/download`}
+                  aria-label={`Download PDF of invoice ${invoice.invoice_number}`}
                   className="inline-flex min-h-9 items-center gap-1.5 rounded-lg border border-line px-3 text-[13px] font-medium text-navy hover:bg-mist"
                 >
                   <Download className="size-4" />
-                  PDF
-                  <span className="sr-only">
-                    {" "}
-                    of invoice {invoice.invoice_number}
-                  </span>
+                  Download PDF
                 </a>
               )}
               {renderActions?.(invoice)}

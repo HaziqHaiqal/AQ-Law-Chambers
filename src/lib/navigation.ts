@@ -3,6 +3,9 @@ import type { Enums } from "@/lib/supabase/database.types";
 export type AppNavIcon =
   | "dashboard"
   | "cases"
+  | "documents"
+  | "actionLog"
+  | "invoices"
   | "tasks"
   | "clients"
   | "enquiries"
@@ -20,11 +23,34 @@ export type AppNavItem = {
 
 export function appNav(
   role: Enums<"app_role">,
-  counts: { openTasks?: number; openEnquiries?: number } = {},
+  counts: {
+    openTasks?: number;
+    openEnquiries?: number;
+    unpaidInvoices?: number;
+  } = {},
 ): AppNavItem[] {
   if (role === "client")
     return [
-      { label: "Case Dashboard", href: "/portal", icon: "cases" },
+      {
+        label: "Overview",
+        href: "/portal",
+        icon: "dashboard",
+        exact: true,
+        alsoUnder: "/portal/cases",
+      },
+      { label: "Documents", href: "/portal/documents", icon: "documents" },
+      { label: "Case activity", href: "/portal/action-log", icon: "actionLog" },
+      {
+        label: "Invoices",
+        href: "/portal/invoices",
+        icon: "invoices",
+        badge: counts.unpaidInvoices,
+      },
+      {
+        label: "Contact the firm",
+        href: "/portal/enquiries",
+        icon: "enquiries",
+      },
       { label: "Account", href: "/account", icon: "account" },
     ];
 

@@ -1,6 +1,10 @@
 import type { ReactNode } from "react";
 import { EmptyState } from "@/components/Status/EmptyState";
-import { formatDateTime, updateCategoryLabels } from "@/lib/format";
+import {
+  clientUpdateCategoryLabels,
+  formatDateTime,
+  updateCategoryLabels,
+} from "@/lib/format";
 import type { Tables } from "@/lib/supabase/database.types";
 
 export type LogUpdate = Pick<
@@ -8,19 +12,24 @@ export type LogUpdate = Pick<
   "id" | "title" | "body" | "category" | "occurred_at"
 > & {
   author: { full_name: string } | null;
+  caseTitle?: string;
 };
 
 export function ActionLog({
   updates,
   renderControls,
+  clientView = false,
 }: {
   updates: LogUpdate[];
   renderControls?: (update: LogUpdate) => ReactNode;
+  clientView?: boolean;
 }) {
   if (updates.length === 0)
     return (
       <EmptyState title="No updates yet">
-        Every step taken on your case will appear here, time-stamped.
+        {clientView
+          ? "Updates from your legal team will appear here when available."
+          : "Every step taken on your case will appear here, time-stamped."}
       </EmptyState>
     );
 
@@ -46,16 +55,31 @@ export function ActionLog({
               {formatDateTime(update.occurred_at)}
             </time>
             <span aria-hidden="true">·</span>
-            <span>{updateCategoryLabels[update.category]}</span>
+            <span>
+              {clientView
+                ? clientUpdateCategoryLabels[update.category]
+                : updateCategoryLabels[update.category]}
+            </span>
+            {update.caseTitle && (
+              <>
+                <span aria-hidden="true">·</span>
+                <span className="font-medium text-navy">
+                  {update.caseTitle}
+                </span>
+              </>
+            )}
           </div>
           <p className="mt-1.5 text-sm leading-relaxed">
-            <span className="font-semibold">{update.title}.</span>{" "}
+            <span className="font-semibold">{update.title}</span>
+            {update.body && " — "}
             <span className="whitespace-pre-line text-navy/85">
               {update.body}
             </span>
           </p>
           {update.author && (
-            <p className="mt-1 text-xs text-slate">{update.author.full_name}</p>
+            <p className="mt-1 text-xs text-slate">
+              Posted by {update.author.full_name}
+            </p>
           )}
           {renderControls?.(update)}
         </li>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
-import { practiceAreas, sectors, firm } from "@/data/site";
+import { enquiryTopics, firm } from "@/data/site";
 import { ButtonArrow } from "@/components/Buttons/ButtonArrow";
 import { FieldError } from "@/components/Forms/FieldError";
 import { FormAlert } from "@/components/Forms/FormAlert";
@@ -11,14 +11,6 @@ import { submitEnquiry, type EnquiryFormState } from "@/lib/actions/enquiries";
 
 const inputClass = "enquiry-input";
 const labelClass = "text-sm font-medium text-navy";
-
-const topics = [
-  ...[...practiceAreas, ...sectors].map((item) => ({
-    value: item.title,
-    label: item.short,
-  })),
-  { value: "General enquiry", label: "Something else" },
-];
 
 export function EnquiryForm() {
   const [state, action] = useActionState<EnquiryFormState, FormData>(
@@ -85,7 +77,8 @@ export function EnquiryForm() {
         </label>
         <label className="grid content-start gap-2">
           <span className={labelClass}>
-            Phone <span className="font-normal text-slate">(optional)</span>
+            Phone / WhatsApp{" "}
+            <span className="font-normal text-slate">(optional)</span>
           </span>
           <input
             name="phone"
@@ -108,7 +101,7 @@ export function EnquiryForm() {
               className={`${inputClass} appearance-none pr-10`}
             >
               <option value="">Choose an area</option>
-              {topics.map((topic) => (
+              {enquiryTopics.map((topic) => (
                 <option key={topic.value} value={topic.value}>
                   {topic.label}
                 </option>

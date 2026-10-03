@@ -56,6 +56,21 @@ export function formatDate(value: string | Date) {
   return `${p.day} ${p.month} ${p.year}`;
 }
 
+/** Today's date in the time zone shown throughout the client account. */
+export function portalToday() {
+  const values = Object.fromEntries(
+    new Intl.DateTimeFormat("en-GB", {
+      timeZone: TIME_ZONE,
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    })
+      .formatToParts(new Date())
+      .map((part) => [part.type, part.value]),
+  );
+  return `${values.year}-${values.month}-${values.day}`;
+}
+
 export function formatLongDate(value: Date) {
   return new Intl.DateTimeFormat("en-GB", {
     timeZone: TIME_ZONE,
@@ -132,6 +147,17 @@ export const documentCategoryLabels: Record<
   internal: "Internal (never published)",
 };
 
+export const clientDocumentCategoryLabels: Record<
+  Enums<"document_category">,
+  string
+> = {
+  emergency_cause_papers: "Court papers",
+  sworn_testimony: "Witness statements",
+  evidence: "Evidence",
+  court_directives: "Court orders",
+  internal: "Internal",
+};
+
 export const documentCategoryHints: Record<
   Enums<"document_category">,
   string
@@ -166,6 +192,13 @@ export const milestoneLabels: Record<Enums<"milestone_stage">, string> = {
   inter_partes_return: "Inter Partes Return Date",
 };
 
+export const clientMilestoneLabels: Record<Enums<"milestone_stage">, string> = {
+  ex_parte_filing: "Urgent application filed",
+  ex_parte_hearing: "Urgent court hearing",
+  execution_service: "Court order carried out",
+  inter_partes_return: "Follow-up court hearing",
+};
+
 export const milestoneOrder = [
   "ex_parte_filing",
   "ex_parte_hearing",
@@ -182,6 +215,20 @@ export const updateCategoryLabels: Record<Enums<"update_category">, string> = {
   compliance: "Compliance",
   forensic: "Forensic",
   general: "General",
+};
+
+export const clientUpdateCategoryLabels: Record<
+  Enums<"update_category">,
+  string
+> = {
+  filing: "Court filing",
+  court_order: "Court order",
+  execution: "Order carried out",
+  service: "Order shared with banks and others",
+  supervising_solicitor: "Independent solicitor report",
+  compliance: "Compliance check",
+  forensic: "Forensic review",
+  general: "General update",
 };
 
 /** Enquiries waiting on a partner: not contacted yet, or no case opened or closed. */
@@ -246,6 +293,14 @@ export function caseStatusLabel(row: {
   if (row.last_completed_stage)
     return `Active - ${afterPhase[row.last_completed_stage]}`;
   return "Active - Pre-Filing";
+}
+
+export function clientCaseStatusLabel(row: {
+  status: Enums<"case_status"> | null;
+}) {
+  if (row.status === "intake") return "Being set up";
+  if (row.status === "closed") return "Closed";
+  return "In progress";
 }
 
 export function caseTitle(title: string | null) {
