@@ -24,11 +24,11 @@ const cinzel = Cinzel({
 
 export const metadata: Metadata = {
   title: {
-    default: "A&Q Law Chambers — Advocates & Solicitors, Shah Alam",
+    default: "A&Q Law Chambers — Advocates & Solicitors, Kuala Lumpur",
     template: "%s | A&Q Law Chambers",
   },
   description:
-    "A&Q Law Chambers, Advocates & Solicitors in Shah Alam: civil litigation, mediation & arbitration, employment, insurance and real estate, with a 24/7 Hotline on 03-503 3330.",
+    "A&Q Law Chambers, Advocates & Solicitors in Kuala Lumpur: civil litigation, mediation & arbitration, employment, insurance and real estate, with a 24/7 Hotline on 03-503 3330.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

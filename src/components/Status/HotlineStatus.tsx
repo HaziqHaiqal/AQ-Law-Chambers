@@ -14,7 +14,7 @@ function subscribe(onChange: () => void) {
   return () => window.clearInterval(id);
 }
 
-/** Current time in Shah Alam, e.g. "11:24 pm". Null during server render. */
+/** Current time in Kuala Lumpur, e.g. "11:24 pm". Null during server render. */
 function useMalaysiaTime() {
   return useSyncExternalStore(
     subscribe,
@@ -23,7 +23,7 @@ function useMalaysiaTime() {
   );
 }
 
-/** "Open now · 11:24 pm in Shah Alam" — reinforces that the hotline is staffed around the clock. */
+/** "Open now · 11:24 pm in Kuala Lumpur" — reinforces that the hotline is staffed around the clock. */
 export function HotlineStatus({ tone = "light" }: { tone?: "light" | "dark" }) {
   const time = useMalaysiaTime();
   return (
@@ -38,7 +38,7 @@ export function HotlineStatus({ tone = "light" }: { tone?: "light" | "dark" }) {
         <span className={tone === "light" ? "text-white" : "text-navy"}>
           Open now
         </span>
-        {time && <> · {time} in Shah Alam</>}
+        {time && <> · {time} in Kuala Lumpur</>}
       </span>
     </p>
   );

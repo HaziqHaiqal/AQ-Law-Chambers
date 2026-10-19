@@ -94,7 +94,7 @@ export function Header() {
       <div className="hidden border-b border-line bg-mist text-[11px] text-slate xl:block">
         <Container className="flex min-h-9 items-center justify-between gap-4">
           <p className="hidden tracking-[0.04em] sm:block">
-            Advocates &amp; Solicitors · Shah Alam, Malaysia
+            Advocates &amp; Solicitors · Kuala Lumpur, Malaysia
           </p>
           <a
             href={`tel:${firm.hotlineTel}`}

@@ -26,8 +26,7 @@ export function ContactDetails() {
         <MapPin className={iconClass} />
         <div>
           <address className="not-italic">
-            {/* Non-breaking hyphen keeps "Al-Farabi" together. */}
-            {firm.address.slice(0, -1).join(", ").replaceAll("-", "‑")}
+            {firm.address.slice(0, -1).join(", ")}
             <br />
             {firm.address.at(-1)}
           </address>

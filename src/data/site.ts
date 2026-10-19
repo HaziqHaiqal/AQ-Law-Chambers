@@ -3,9 +3,10 @@ export const firm = {
   legalName: "A&Q LAW CHAMBERS",
   tagline: "Advocates & Solicitors",
   address: [
-    "AL530 Kompleks Al-Farabi",
-    "Jalan Ilmu 1",
-    "40450 Shah Alam, Selangor",
+    "Level 21, The Gardens South Tower",
+    "Lingkaran Syed Putra",
+    "Mid Valley City",
+    "59200 Kuala Lumpur",
   ],
   phone: "03-503 3330",
   phoneTel: "+6035033330",
@@ -15,7 +16,7 @@ export const firm = {
   email: "aqlawchambers@gmail.com",
   hours: "Office: Mon – Fri, 9:00am – 6:00pm",
   mapsUrl:
-    "https://www.google.com/maps/search/?api=1&query=Kompleks+Al-Farabi+Jalan+Ilmu+1+40450+Shah+Alam+Selangor",
+    "https://www.google.com/maps/search/?api=1&query=The+Gardens+South+Tower+Lingkaran+Syed+Putra+Mid+Valley+City+59200+Kuala+Lumpur",
 };
 
 export const nav = {
@@ -133,7 +134,7 @@ export const sectors = [
 export const overview = {
   heading: "A focused disputes practice for urgent, high-value matters.",
   paragraphs: [
-    "A&Q Law Chambers is a partner-led firm of Advocates & Solicitors based in Shah Alam, Selangor. We act for individuals, companies and investors who need to move quickly — when funds have been misappropriated, assets are at risk of dissipation, or critical evidence may be lost.",
+    "A&Q Law Chambers is a partner-led firm of Advocates & Solicitors based in Kuala Lumpur. We act for individuals, companies and investors who need to move quickly — when funds have been misappropriated, assets are at risk of dissipation, or critical evidence may be lost.",
     "Our practice combines High Court emergency relief with the technical capability to trace digital assets across blockchains and borders, so that clients are advised on both the law and the evidence from the first call.",
   ],
   facts: [
@@ -141,7 +142,7 @@ export const overview = {
       label: "Registered name",
       value: "A&Q Law Chambers (Advocates & Solicitors)",
     },
-    { label: "Office", value: "Shah Alam, Selangor, Malaysia" },
+    { label: "Office", value: "Mid Valley City, Kuala Lumpur" },
     {
       label: "Core focus",
       value: "Emergency High Court relief & digital asset recovery",
