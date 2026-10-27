@@ -10,20 +10,19 @@ import { fromDateTimeInput } from "@/lib/format";
 import { createClient } from "@/lib/supabase/server";
 import { field } from "@/lib/validation/forms";
 
-export async function setMilestoneCompleted(
+/** Ticks one checklist step; the database completes or reopens its stage to match. */
+export async function setMilestoneStepCompleted(
   caseId: number,
-  stage: string,
+  stepId: number,
   completed: boolean,
 ) {
   await requireRole("admin");
-  const milestone = asEnum("milestone_stage", stage);
-  if (!milestone) return;
   const supabase = await createClient();
   await supabase
-    .from("case_milestones")
+    .from("case_milestone_steps")
     .update({ completed_at: completed ? new Date().toISOString() : null })
-    .eq("case_id", caseId)
-    .eq("stage", milestone);
+    .eq("id", stepId)
+    .eq("case_id", caseId);
   revalidateCase(caseId);
 }
 

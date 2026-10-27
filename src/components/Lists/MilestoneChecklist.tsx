@@ -2,7 +2,7 @@
 
 import { useActionState, useOptimistic, useTransition } from "react";
 import {
-  setMilestoneCompleted,
+  setMilestoneStepCompleted,
   updateMilestoneDetails,
 } from "@/lib/actions/admin/milestones";
 import type { FormState } from "@/lib/actions/admin/shared";
@@ -12,6 +12,7 @@ import { Check } from "@/components/Icons";
 import { BusyLabel } from "@/components/Status/BusyLabel";
 import {
   formatDateTime,
+  milestoneGoals,
   milestoneLabels,
   milestoneOrder,
   milestoneState,
@@ -26,41 +27,50 @@ type Milestone = Pick<
   completer: { full_name: string } | null;
 };
 
+type Step = Pick<
+  Tables<"case_milestone_steps">,
+  "id" | "stage" | "title" | "detail" | "completed_at"
+>;
+
 function MilestoneRow({
   caseId,
   milestone,
+  steps,
   index,
+  courtReference,
 }: {
   caseId: number;
   milestone: Milestone;
+  steps: Step[];
   index: number;
+  courtReference: string | null;
 }) {
-  const [done, setDone] = useOptimistic(Boolean(milestone.completed_at));
+  // Ticks shown straight away; the stage itself completes in the database.
+  const [pending, setPending] = useOptimistic<
+    Record<number, boolean>,
+    [number, boolean]
+  >({}, (current, [id, completed]) => ({ ...current, [id]: completed }));
   const [, startTransition] = useTransition();
   const [state, action, saving] = useActionState<FormState, FormData>(
     updateMilestoneDetails,
     {},
   );
   const live = milestoneState(milestone);
+  const isTicked = (step: Step) =>
+    pending[step.id] ?? Boolean(step.completed_at);
+  const ticked = steps.filter(isTicked).length;
+  const done = steps.length
+    ? ticked === steps.length
+    : Boolean(milestone.completed_at);
 
   return (
-    <li className="py-4 first:pt-0 last:pb-0">
+    <li className="py-5 first:pt-0 last:pb-0">
       <div className="flex items-start gap-4">
-        <button
-          type="button"
-          role="checkbox"
-          aria-checked={done}
-          aria-label={`${milestoneLabels[milestone.stage]} completed`}
-          onClick={() =>
-            startTransition(async () => {
-              setDone(!done);
-              await setMilestoneCompleted(caseId, milestone.stage, !done);
-            })
-          }
-          className={`grid size-7 shrink-0 place-items-center rounded-lg border-2 transition-colors focus-visible:ring-4 focus-visible:ring-navy/15 ${
+        <span
+          className={`grid size-7 shrink-0 place-items-center rounded-lg border-2 transition-colors ${
             done
               ? "border-gold bg-gold text-navy"
-              : "border-slate-light bg-white hover:border-navy"
+              : "border-slate-light bg-white"
           }`}
         >
           {done ? (
@@ -70,21 +80,84 @@ function MilestoneRow({
               {index + 1}
             </span>
           )}
-        </button>
+        </span>
         <div className="min-w-0 flex-1">
           <p className="text-sm font-semibold">
             {milestoneLabels[milestone.stage]}
+            {milestone.stage === "cause_papers" && courtReference && (
+              <span className="font-normal text-slate">
+                {" "}
+                (Civil Suit No.: {courtReference})
+              </span>
+            )}
           </p>
           <p className="mt-0.5 text-xs text-slate">
-            {milestone.completed_at
-              ? `Completed ${formatDateTime(milestone.completed_at)}${milestone.completer ? ` by ${milestone.completer.full_name}` : ""}`
+            {done
+              ? milestone.completed_at
+                ? `Completed ${formatDateTime(milestone.completed_at)}${milestone.completer ? ` by ${milestone.completer.full_name}` : ""}`
+                : "Completed"
               : live === "in_progress"
                 ? "In progress: scheduled date has passed"
                 : milestone.scheduled_for
                   ? `Scheduled ${formatDateTime(milestone.scheduled_for)}`
-                  : "Not started"}
+                  : ticked
+                    ? "In progress"
+                    : "Not started"}
+            {!done &&
+              steps.length > 0 &&
+              ` · ${ticked} of ${steps.length} steps done`}
           </p>
-          <details className="group mt-2">
+          <p className="mt-2 text-[13px] leading-relaxed text-slate">
+            <span className="font-medium text-navy">Goal:</span>{" "}
+            {milestoneGoals[milestone.stage]}
+          </p>
+
+          {steps.length > 0 && (
+            <ul className="mt-3 grid gap-3">
+              {steps.map((step) => {
+                const checked = isTicked(step);
+                return (
+                  <li key={step.id} className="flex items-start gap-3">
+                    <button
+                      type="button"
+                      role="checkbox"
+                      aria-checked={checked}
+                      aria-label={step.title}
+                      onClick={() =>
+                        startTransition(async () => {
+                          setPending([step.id, !checked]);
+                          await setMilestoneStepCompleted(
+                            caseId,
+                            step.id,
+                            !checked,
+                          );
+                        })
+                      }
+                      className={`mt-px grid size-5 shrink-0 place-items-center rounded-md border-2 transition-colors focus-visible:ring-4 focus-visible:ring-navy/15 ${
+                        checked
+                          ? "border-gold bg-gold text-navy"
+                          : "border-slate-light bg-white hover:border-navy"
+                      }`}
+                    >
+                      {checked && (
+                        <Check className="size-3.5" strokeWidth={3} />
+                      )}
+                    </button>
+                    <div className="min-w-0 text-[13px] leading-relaxed">
+                      <p className="font-medium">{step.title}</p>
+                      {step.detail && (
+                        <p className="whitespace-pre-line text-slate">
+                          {step.detail}
+                        </p>
+                      )}
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+
+          <details className="group mt-3">
             <summary className="w-fit text-xs font-medium text-gold-ink hover:text-navy">
               Date &amp; note for the client
             </summary>
@@ -135,9 +208,13 @@ function MilestoneRow({
 export function MilestoneChecklist({
   caseId,
   milestones,
+  steps,
+  courtReference,
 }: {
   caseId: number;
   milestones: Milestone[];
+  steps: Step[];
+  courtReference: string | null;
 }) {
   const byStage = new Map(milestones.map((m) => [m.stage, m]));
   return (
@@ -149,7 +226,9 @@ export function MilestoneChecklist({
             key={stage}
             caseId={caseId}
             milestone={milestone}
+            steps={steps.filter((step) => step.stage === stage)}
             index={index}
+            courtReference={courtReference}
           />
         ) : null;
       })}

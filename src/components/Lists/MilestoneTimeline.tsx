@@ -33,7 +33,8 @@ export function MilestoneTimeline({
   });
 
   return (
-    <ol className="grid gap-0 md:grid-cols-4">
+    // Seven stages read best as a vertical timeline at every width.
+    <ol className="grid">
       {milestoneOrder.map((stage, index) => {
         const milestone = byStage.get(stage);
         const state = states[index];
@@ -48,12 +49,12 @@ export function MilestoneTimeline({
           <li
             key={stage}
             aria-current={isCurrent ? "step" : undefined}
-            className="relative flex gap-4 pb-8 last:pb-0 md:block md:pr-6 md:pb-0"
+            className="relative flex gap-4 pb-7 last:pb-0"
           >
-            {index < 3 && (
+            {index < milestoneOrder.length - 1 && (
               <span
                 aria-hidden="true"
-                className={`absolute top-10 bottom-0 left-[19px] w-0.5 md:top-[19px] md:right-0 md:bottom-auto md:left-10 md:h-0.5 md:w-auto ${
+                className={`absolute top-10 bottom-0 left-[19px] w-0.5 ${
                   state === "done" && nextDone ? "bg-gold" : "bg-line"
                 }`}
               />
@@ -73,7 +74,7 @@ export function MilestoneTimeline({
                 index + 1
               )}
             </span>
-            <div className="min-w-0 md:mt-4">
+            <div className="min-w-0">
               <p
                 className={`text-xs font-medium ${state === "done" ? "text-gold-ink" : isCurrent ? "text-navy" : "text-slate"}`}
               >

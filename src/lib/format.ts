@@ -1,4 +1,4 @@
-import type { Enums } from "@/lib/supabase/database.types";
+import { Constants, type Enums } from "@/lib/supabase/database.types";
 
 const TIME_ZONE = "Asia/Kuala_Lumpur";
 const UTC_OFFSET = "+08:00";
@@ -140,41 +140,49 @@ export const documentCategoryLabels: Record<
   Enums<"document_category">,
   string
 > = {
-  emergency_cause_papers: "Emergency Cause Papers",
-  sworn_testimony: "Sworn Testimony",
-  evidence: "Evidence",
-  court_directives: "Court Directives",
+  client_case_outline: "Client Case Outline",
+  writ_of_summons: "Writ of Summons",
+  statement_of_claim: "Statement of Claim",
+  memorandum_of_appearance: "Memorandum of Appearance",
+  statement_of_defence: "Statement of Defence",
+  certificate_of_urgency: "Certificate of Urgency",
+  notice_of_application: "Notice of Application",
+  affidavit_in_support: "Affidavit in Support",
+  certificate_verifying_exhibit: "Certificate Verifying Exhibit",
+  draft_order: "Draft Order",
+  order: "Order",
   internal: "Internal (never published)",
 };
 
+// Clients see the same court paper names; internal files never reach them.
 export const clientDocumentCategoryLabels: Record<
   Enums<"document_category">,
   string
-> = {
-  emergency_cause_papers: "Court papers",
-  sworn_testimony: "Witness statements",
-  evidence: "Evidence",
-  court_directives: "Court orders",
-  internal: "Internal",
-};
+> = { ...documentCategoryLabels, internal: "Internal" };
 
 export const documentCategoryHints: Record<
   Enums<"document_category">,
   string
 > = {
-  emergency_cause_papers: "Notice of Application, Certificate of Urgency",
-  sworn_testimony: "Affidavit in Support",
-  evidence: "Exhibits, e.g. telecom call logs, bank statements",
-  court_directives: "Draft and sealed ex parte orders",
+  client_case_outline: "The client's account of the facts and the case so far",
+  writ_of_summons: "Originating process that starts the claim (Enclosure 1)",
+  statement_of_claim: "The claim as pleaded, with the relief sought",
+  memorandum_of_appearance: "Filed by the defendant's solicitors",
+  statement_of_defence: "The defendant's answer to the claim",
+  certificate_of_urgency: "Perakuan Segera for an urgent hearing",
+  notice_of_application: "Interlocutory application, e.g. ex parte injunction",
+  affidavit_in_support: "Sworn evidence with its exhibit tabs",
+  certificate_verifying_exhibit:
+    "Commissioner for Oaths' certificate on exhibits",
+  draft_order: "Proposed order for the judge to approve",
+  order: "Sealed order granted by the court",
   internal: "Drafts, legal research, forensic reports",
 };
 
-export const publishableCategories = [
-  "emergency_cause_papers",
-  "sworn_testimony",
-  "evidence",
-  "court_directives",
-] as const satisfies readonly Enums<"document_category">[];
+export const publishableCategories =
+  Constants.public.Enums.document_category.filter(
+    (category) => category !== "internal",
+  );
 
 export const reliefTypeLabels: Record<Enums<"relief_type">, string> = {
   mareva: "Mareva",
@@ -186,24 +194,50 @@ export const reliefTypeLabels: Record<Enums<"relief_type">, string> = {
 };
 
 export const milestoneLabels: Record<Enums<"milestone_stage">, string> = {
-  ex_parte_filing: "Ex Parte Filing",
-  ex_parte_hearing: "Ex Parte Hearing",
-  execution_service: "Execution / Service of Order",
-  inter_partes_return: "Inter Partes Return Date",
+  intake_discovery: "Client Intake, Forensic Discovery & Pre-Action Demand",
+  cause_papers: "E-Filing Core Cause Papers",
+  substituted_service: "Substituted Service Execution via Email",
+  defence_review: "Opposing Pleadings & Defence Review",
+  ex_parte_application: "Emergency Ex Parte Injunction Application",
+  ex_parte_hearing: "Ex Parte High Court Hearing & Order Acquisition",
+  final_judgment: "Final Judgment, Recovery Execution & Cost Taxation",
+};
+
+export const milestoneGoals: Record<Enums<"milestone_stage">, string> = {
+  intake_discovery:
+    "Complete forensic blockchain investigation, gather digital evidence, and establish initial contact prior to litigation.",
+  cause_papers:
+    "Register the main civil action in the High Court of Malaya at Kuala Lumpur (Commercial Division).",
+  substituted_service:
+    "Formally serve sealed court orders on offshore parties via approved digital channels.",
+  defence_review:
+    "Review opposing appearances and prepare responses to exchange defences.",
+  ex_parte_application:
+    "Prepare and submit urgent interlocutory cause papers for emergency ex parte relief.",
+  ex_parte_hearing:
+    "Obtain sealed interim injunctions in High Court 2 Chambers.",
+  final_judgment:
+    "Enter final judgment, assess exemplary damages, and recover litigation expenses.",
 };
 
 export const clientMilestoneLabels: Record<Enums<"milestone_stage">, string> = {
-  ex_parte_filing: "Urgent application filed",
+  intake_discovery: "Case review & evidence",
+  cause_papers: "Claim filed in court",
+  substituted_service: "Court papers served",
+  defence_review: "Defence received",
+  ex_parte_application: "Urgent application filed",
   ex_parte_hearing: "Urgent court hearing",
-  execution_service: "Court order carried out",
-  inter_partes_return: "Follow-up court hearing",
+  final_judgment: "Judgment & recovery",
 };
 
 export const milestoneOrder = [
-  "ex_parte_filing",
+  "intake_discovery",
+  "cause_papers",
+  "substituted_service",
+  "defence_review",
+  "ex_parte_application",
   "ex_parte_hearing",
-  "execution_service",
-  "inter_partes_return",
+  "final_judgment",
 ] as const satisfies readonly Enums<"milestone_stage">[];
 
 export const updateCategoryLabels: Record<Enums<"update_category">, string> = {
@@ -261,17 +295,23 @@ export function milestoneState(milestone: {
 }
 
 const inProgressPhase: Record<Enums<"milestone_stage">, string> = {
-  ex_parte_filing: "Filing Phase",
+  intake_discovery: "Intake Phase",
+  cause_papers: "Filing Phase",
+  substituted_service: "Service Phase",
+  defence_review: "Pleadings Phase",
+  ex_parte_application: "Ex Parte Application Phase",
   ex_parte_hearing: "Hearing Phase",
-  execution_service: "Execution Phase",
-  inter_partes_return: "Return Date Phase",
+  final_judgment: "Judgment Phase",
 };
 
 const afterPhase: Record<Enums<"milestone_stage">, string> = {
-  ex_parte_filing: "Post-Filing",
+  intake_discovery: "Post-Intake",
+  cause_papers: "Post-Filing",
+  substituted_service: "Post-Service",
+  defence_review: "Post-Pleadings",
+  ex_parte_application: "Application Filed",
   ex_parte_hearing: "Post-Hearing",
-  execution_service: "Post-Execution",
-  inter_partes_return: "Inter Partes Concluded",
+  final_judgment: "Judgment Entered",
 };
 
 export function caseStatusLabel(row: {

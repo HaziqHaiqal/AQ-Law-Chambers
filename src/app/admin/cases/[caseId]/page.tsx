@@ -53,6 +53,7 @@ export default async function CaseWorkspace({
     { data: overview },
     { data: caseRecord },
     { data: milestones },
+    { data: milestoneSteps },
     { data: documents },
     { data: updates },
     { data: invoices },
@@ -72,6 +73,11 @@ export default async function CaseWorkspace({
         "stage, scheduled_for, completed_at, note, completer:profiles!case_milestones_completed_by_fkey(full_name)",
       )
       .eq("case_id", caseId),
+    supabase
+      .from("case_milestone_steps")
+      .select("id, stage, title, detail, completed_at")
+      .eq("case_id", caseId)
+      .order("sort_order"),
     supabase
       .from("documents")
       .select(
@@ -186,6 +192,10 @@ export default async function CaseWorkspace({
                 { table: "document_comments" },
                 { table: "documents", filter: `case_id=eq.${caseId}` },
                 { table: "case_milestones", filter: `case_id=eq.${caseId}` },
+                {
+                  table: "case_milestone_steps",
+                  filter: `case_id=eq.${caseId}`,
+                },
               ]}
             />
             {!closed && (
@@ -311,10 +321,15 @@ export default async function CaseWorkspace({
         <div className="grid gap-6 lg:grid-cols-2">
           <SectionCard
             title="Milestone Controller"
-            description="Tick a stage and the client's timeline advances immediately."
+            description="Tick each step. When a stage's last step is ticked, the client's timeline advances immediately."
             className="h-fit"
           >
-            <MilestoneChecklist caseId={caseId} milestones={milestones ?? []} />
+            <MilestoneChecklist
+              caseId={caseId}
+              milestones={milestones ?? []}
+              steps={milestoneSteps ?? []}
+              courtReference={caseRecord.court_reference}
+            />
           </SectionCard>
           <div className="grid content-start gap-6">
             <SectionCard

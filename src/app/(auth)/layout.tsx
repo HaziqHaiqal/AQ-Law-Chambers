@@ -5,7 +5,7 @@ import { Check, Lock, Phone } from "@/components/Icons";
 import { firm } from "@/data/site";
 
 const features = [
-  "Follow your application through all four court stages",
+  "Follow your case through all seven stages",
   "Download filed cause papers, affidavits and orders",
   "Live, time-stamped updates and secure messaging with your lawyer",
 ];

@@ -113,8 +113,8 @@ export default async function CasesPage({
         title="New Case"
         description={
           fromEnquiry
-            ? `From ${fromEnquiry.full_name}'s enquiry. The four court milestones are added automatically.`
-            : "The four court milestones are added automatically."
+            ? `From ${fromEnquiry.full_name}'s enquiry. The seven milestone stages and their checklists are added automatically.`
+            : "The seven milestone stages and their checklists are added automatically."
         }
         closeHref="/admin/cases"
       >

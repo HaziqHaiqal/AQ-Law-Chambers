@@ -191,7 +191,7 @@ export default async function PortalHome({
                   : item.next_stage
                     ? `Next step: ${clientMilestoneLabels[item.next_stage]} (stage ${milestoneOrder.indexOf(item.next_stage) + 1} of ${milestoneOrder.length})`
                     : item.last_completed_stage
-                      ? "All four stages complete"
+                      ? "All seven stages complete"
                       : "Timeline being prepared";
               return (
                 <li key={item.id}>

@@ -110,6 +110,57 @@ export type Database = {
           },
         ];
       };
+      case_milestone_steps: {
+        Row: {
+          case_id: number;
+          completed_at: string | null;
+          completed_by: string | null;
+          detail: string | null;
+          id: number;
+          sort_order: number;
+          stage: Database["public"]["Enums"]["milestone_stage"];
+          title: string;
+          updated_at: string;
+        };
+        Insert: {
+          case_id: number;
+          completed_at?: string | null;
+          completed_by?: string | null;
+          detail?: string | null;
+          id?: never;
+          sort_order: number;
+          stage: Database["public"]["Enums"]["milestone_stage"];
+          title: string;
+          updated_at?: string;
+        };
+        Update: {
+          case_id?: number;
+          completed_at?: string | null;
+          completed_by?: string | null;
+          detail?: string | null;
+          id?: never;
+          sort_order?: number;
+          stage?: Database["public"]["Enums"]["milestone_stage"];
+          title?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "case_milestone_steps_case_id_stage_fkey";
+            columns: ["case_id", "stage"];
+            isOneToOne: false;
+            referencedRelation: "case_milestones";
+            referencedColumns: ["case_id", "stage"];
+          },
+          {
+            foreignKeyName: "case_milestone_steps_completed_by_fkey";
+            columns: ["completed_by"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       case_milestones: {
         Row: {
           case_id: number;
@@ -815,10 +866,17 @@ export type Database = {
         | "milestone_completed";
       case_status: "intake" | "active" | "closed";
       document_category:
-        | "emergency_cause_papers"
-        | "sworn_testimony"
-        | "evidence"
-        | "court_directives"
+        | "client_case_outline"
+        | "writ_of_summons"
+        | "statement_of_claim"
+        | "memorandum_of_appearance"
+        | "statement_of_defence"
+        | "certificate_of_urgency"
+        | "notice_of_application"
+        | "affidavit_in_support"
+        | "certificate_verifying_exhibit"
+        | "draft_order"
+        | "order"
         | "internal";
       enquiry_status:
         | "new"
@@ -829,10 +887,13 @@ export type Database = {
         | "not_proceeding";
       invoice_status: "draft" | "issued" | "paid" | "void";
       milestone_stage:
-        | "ex_parte_filing"
+        | "intake_discovery"
+        | "cause_papers"
+        | "substituted_service"
+        | "defence_review"
+        | "ex_parte_application"
         | "ex_parte_hearing"
-        | "execution_service"
-        | "inter_partes_return";
+        | "final_judgment";
       notification_kind:
         | "document_published"
         | "case_update"
@@ -993,10 +1054,17 @@ export const Constants = {
       ],
       case_status: ["intake", "active", "closed"],
       document_category: [
-        "emergency_cause_papers",
-        "sworn_testimony",
-        "evidence",
-        "court_directives",
+        "client_case_outline",
+        "writ_of_summons",
+        "statement_of_claim",
+        "memorandum_of_appearance",
+        "statement_of_defence",
+        "certificate_of_urgency",
+        "notice_of_application",
+        "affidavit_in_support",
+        "certificate_verifying_exhibit",
+        "draft_order",
+        "order",
         "internal",
       ],
       enquiry_status: [
@@ -1009,10 +1077,13 @@ export const Constants = {
       ],
       invoice_status: ["draft", "issued", "paid", "void"],
       milestone_stage: [
-        "ex_parte_filing",
+        "intake_discovery",
+        "cause_papers",
+        "substituted_service",
+        "defence_review",
+        "ex_parte_application",
         "ex_parte_hearing",
-        "execution_service",
-        "inter_partes_return",
+        "final_judgment",
       ],
       notification_kind: [
         "document_published",

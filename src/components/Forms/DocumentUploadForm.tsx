@@ -38,7 +38,7 @@ export function DocumentUploadForm({ caseId }: { caseId: number }) {
   const [file, setFile] = useState<File | null>(null);
   const [dragging, setDragging] = useState(false);
   const [category, setCategory] = useState<Enums<"document_category">>(
-    "emergency_cause_papers",
+    "client_case_outline",
   );
   const [title, setTitle] = useState("");
   const [exhibit, setExhibit] = useState("");
