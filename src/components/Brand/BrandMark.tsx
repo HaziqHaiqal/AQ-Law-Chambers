@@ -1,10 +1,10 @@
 import { Crest } from "./Crest";
 
-/** Crest beside the logo's wordmark: "A&Q" over a gold rule and "LAW · CHAMBERS", set in Cinzel to match. */
+/** Monogram beside the logo's wordmark: "A&Q" over a gold rule and "LAW · CHAMBERS", set in Cinzel to match. */
 export function BrandMark({ light = false }: { light?: boolean }) {
   return (
     <span className="flex items-center gap-3">
-      <Crest light={light} preload className="w-9 sm:w-10" />
+      <Crest light={light} preload className="w-12 sm:w-13" />
       <span
         className={`flex flex-col items-center font-display leading-none ${light ? "text-white" : "text-navy"}`}
       >
