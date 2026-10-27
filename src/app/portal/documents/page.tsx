@@ -27,6 +27,7 @@ export default async function PortalDocumentsPage({
   const selectedCase = getSelectedClientCase(cases, caseParam);
   if (caseParam !== undefined && !selectedCase) notFound();
   const visibleCases = selectedCase ? [selectedCase] : cases;
+  const scopedCase = selectedCase ?? (cases.length === 1 ? cases[0] : null);
   const { data: documents } = visibleCases.length
     ? await supabase
         .from("documents")
@@ -63,9 +64,11 @@ export default async function PortalDocumentsPage({
           />
         }
       >
-        {selectedCase
-          ? `Files shared for ${caseTitle(selectedCase.title)}. Download a copy or leave a private comment. Downloads are logged as proof that you received the file.`
-          : "Files shared across your cases. Each file shows which case it belongs to."}
+        {scopedCase
+          ? `Files shared for ${caseTitle(scopedCase.title)}. Download a copy or leave a private comment. Downloads are logged as proof that you received the file.`
+          : cases.length > 1
+            ? "Files shared across your cases. Each file shows which case it belongs to."
+            : "Files the firm shares with you will appear here."}
       </PageHeading>
       <CaseSelector cases={cases} selectedCaseId={selectedCase?.id ?? null} />
       <div className="grid grid-cols-1 gap-6">
@@ -75,22 +78,14 @@ export default async function PortalDocumentsPage({
           </SectionCard>
         ) : (
           <SectionCard
-            title={
-              selectedCase
-                ? caseTitle(selectedCase.title)
-                : cases.length > 1
-                  ? "All cases"
-                  : "Shared files"
-            }
+            title={scopedCase ? caseTitle(scopedCase.title) : "All cases"}
             flush
           >
             <ClientDocumentList
               documents={docs}
               threads={threads}
               viewerId={profile.id}
-              caseNames={
-                cases.length > 1 && !selectedCase ? caseNames : undefined
-              }
+              caseNames={scopedCase ? undefined : caseNames}
               openDocumentId={
                 typeof document === "string" ? Number(document) : undefined
               }

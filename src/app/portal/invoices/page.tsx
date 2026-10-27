@@ -23,6 +23,7 @@ export default async function PortalInvoicesPage({
   const selectedCase = getSelectedClientCase(cases, caseParam);
   if (caseParam !== undefined && !selectedCase) notFound();
   const visibleCases = selectedCase ? [selectedCase] : cases;
+  const scopedCase = selectedCase ?? (cases.length === 1 ? cases[0] : null);
   const { data: invoices } = visibleCases.length
     ? await supabase
         .from("invoices")
@@ -40,10 +41,7 @@ export default async function PortalInvoicesPage({
   );
   const visibleInvoices = (invoices ?? []).map((invoice) => ({
     ...invoice,
-    caseTitle:
-      cases.length > 1 && !selectedCase
-        ? caseNames.get(invoice.case_id)
-        : undefined,
+    caseTitle: scopedCase ? undefined : caseNames.get(invoice.case_id),
   }));
 
   return (
@@ -58,9 +56,11 @@ export default async function PortalInvoicesPage({
           />
         }
       >
-        {selectedCase
-          ? `Invoices for ${caseTitle(selectedCase.title)}.`
-          : "Review invoices across your cases. Each invoice shows which case it belongs to."}
+        {scopedCase
+          ? `Invoices for ${caseTitle(scopedCase.title)}.`
+          : cases.length > 1
+            ? "Review invoices across your cases. Each invoice shows which case it belongs to."
+            : "Invoices from the firm will appear here."}
       </PageHeading>
       <CaseSelector cases={cases} selectedCaseId={selectedCase?.id ?? null} />
       <div className="grid grid-cols-1 gap-6">
@@ -70,13 +70,7 @@ export default async function PortalInvoicesPage({
           </SectionCard>
         ) : (
           <SectionCard
-            title={
-              selectedCase
-                ? caseTitle(selectedCase.title)
-                : cases.length > 1
-                  ? "All cases"
-                  : undefined
-            }
+            title={scopedCase ? caseTitle(scopedCase.title) : "All cases"}
             flush
           >
             <InvoiceList invoices={visibleInvoices} />

@@ -23,6 +23,7 @@ export default async function PortalActionLogPage({
   const selectedCase = getSelectedClientCase(cases, caseParam);
   if (caseParam !== undefined && !selectedCase) notFound();
   const visibleCases = selectedCase ? [selectedCase] : cases;
+  const scopedCase = selectedCase ?? (cases.length === 1 ? cases[0] : null);
   const { data: updates } = visibleCases.length
     ? await supabase
         .from("case_updates")
@@ -40,7 +41,7 @@ export default async function PortalActionLogPage({
   );
   const activity = (updates ?? []).map((update) => ({
     ...update,
-    caseTitle: selectedCase ? undefined : caseNames.get(update.case_id),
+    caseTitle: scopedCase ? undefined : caseNames.get(update.case_id),
   }));
 
   return (
@@ -55,15 +56,17 @@ export default async function PortalActionLogPage({
           />
         }
       >
-        {selectedCase
-          ? `Dated updates for ${caseTitle(selectedCase.title)}, newest first.`
-          : "Latest updates across your cases, with the case name shown on each one."}
+        {scopedCase
+          ? `Dated updates for ${caseTitle(scopedCase.title)}, newest first.`
+          : cases.length > 1
+            ? "Latest updates across your cases, with the case name shown on each one."
+            : "Dated updates from your legal team, newest first."}
       </PageHeading>
       <CaseSelector cases={cases} selectedCaseId={selectedCase?.id ?? null} />
       <SectionCard
         title={
-          selectedCase
-            ? caseTitle(selectedCase.title)
+          scopedCase
+            ? caseTitle(scopedCase.title)
             : cases.length > 1
               ? "All cases"
               : undefined

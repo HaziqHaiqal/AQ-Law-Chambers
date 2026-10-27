@@ -48,7 +48,10 @@ export function AppNav({
 }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const selectedCase = searchParams.get("case");
+  const selectedCase =
+    searchParams.get("case") ??
+    pathname.match(/^\/portal\/cases\/(\d+)/)?.[1] ??
+    null;
   return (
     <ul className="grid gap-1">
       {items.map((item) => {
